@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Primary SEO -->
-    <title>Meez - Free AI Sticker Maker | Create WhatsApp Stickers from Photos</title>
-    <meta name="title" content="Meez - Free AI Sticker Maker | Create WhatsApp Stickers from Photos">
+    <!-- SEO -->
+    <title>Meez - Turn Text and Photos Into Real Stickers | WhatsApp Sticker Maker</title>
+    <meta name="title" content="Meez - Turn Text and Photos Into Real Stickers | WhatsApp Sticker Maker">
     <meta name="description"
-        content="Turn your photos into custom WhatsApp stickers instantly with AI. No design skills needed. Create personalized sticker packs for free. Export to WhatsApp, iMessage, Telegram in one tap.">
+        content="Make custom stickers and send them to WhatsApp in a tap. Create stickers from text, photos, or feelings. No templates, no editing tools — just stickers.">
     <meta name="keywords"
-        content="AI sticker maker, WhatsApp sticker creator, custom stickers app, photo to sticker, sticker generator, meme maker, emoji creator, AI photo editor, personalized stickers, sticker pack maker, free sticker app">
+        content="sticker maker, WhatsApp stickers, custom stickers, photo to sticker, text to sticker, sticker generator, meme stickers, emoji creator">
     <meta name="author" content="Meez">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://denizozzgur.github.io/meez/">
@@ -20,50 +20,32 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="images/splash_logo.png">
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://denizozzgur.github.io/meez/">
-    <meta property="og:title" content="Meez - Create Custom AI Stickers for WhatsApp">
+    <meta property="og:title" content="Meez - Turn Text and Photos Into Real Stickers">
     <meta property="og:description"
-        content="The easiest way to make personalized stickers. Upload a photo or type a prompt — AI does the rest. Free for iOS & Android.">
+        content="Make custom stickers and send them to WhatsApp in a tap. No templates, no editing — just stickers.">
     <meta property="og:image" content="https://denizozzgur.github.io/meez/images/splash_logo.png">
     <meta property="og:site_name" content="Meez">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://denizozzgur.github.io/meez/">
-    <meta name="twitter:title" content="Meez - Create Custom AI Stickers for WhatsApp">
-    <meta name="twitter:description"
-        content="Turn any photo into WhatsApp stickers with AI. No design skills needed. Free for iOS & Android.">
+    <meta name="twitter:title" content="Meez - Turn Text and Photos Into Real Stickers">
+    <meta name="twitter:description" content="Make custom stickers and send them to WhatsApp in a tap.">
     <meta name="twitter:image" content="https://denizozzgur.github.io/meez/images/splash_logo.png">
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "MobileApplication",
-        "name": "Meez - AI Sticker Maker",
-        "description": "Create custom stickers from photos using artificial intelligence. Export directly to WhatsApp, iMessage, and Telegram.",
+        "name": "Meez",
+        "description": "Turn text and photos into real stickers. Make custom stickers and send them to WhatsApp in a tap.",
         "applicationCategory": "PhotoApplication",
         "operatingSystem": "iOS, Android",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "1200"
-        },
-        "featureList": [
-            "AI-powered sticker generation",
-            "Photo to sticker conversion", 
-            "WhatsApp sticker export",
-            "iMessage sticker export",
-            "Multiple art styles",
-            "Community sticker sharing"
-        ]
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
     }
     </script>
 
@@ -120,37 +102,37 @@
         }
 
         .floating-sticker:nth-child(1) {
-            width: 110px;
+            width: 100px;
             top: 8%;
-            left: 5%;
+            left: 4%;
             animation-delay: 0s;
         }
 
         .floating-sticker:nth-child(2) {
-            width: 95px;
-            top: 20%;
-            right: 8%;
+            width: 85px;
+            top: 22%;
+            right: 6%;
             animation-delay: -4s;
         }
 
         .floating-sticker:nth-child(3) {
-            width: 85px;
-            top: 45%;
-            left: 3%;
+            width: 75px;
+            top: 48%;
+            left: 2%;
             animation-delay: -8s;
         }
 
         .floating-sticker:nth-child(4) {
-            width: 100px;
-            top: 65%;
-            right: 4%;
+            width: 90px;
+            top: 68%;
+            right: 3%;
             animation-delay: -12s;
         }
 
         .floating-sticker:nth-child(5) {
-            width: 75px;
-            top: 85%;
-            left: 6%;
+            width: 70px;
+            top: 88%;
+            left: 5%;
             animation-delay: -16s;
         }
 
@@ -209,7 +191,7 @@
             box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
         }
 
-        /* Hero - Original Style */
+        /* Hero */
         .hero {
             position: relative;
             z-index: 1;
@@ -240,10 +222,10 @@
         }
 
         .hero h1 {
-            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            font-size: clamp(2.6rem, 4.5vw, 3.8rem);
             font-weight: 900;
             line-height: 1.12;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .hero h1 .gradient {
@@ -251,32 +233,21 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradientMove 5s ease infinite;
         }
 
-        @keyframes gradientMove {
-
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--dim);
+            margin-bottom: 16px;
+            max-width: 480px;
         }
 
-        .hero-text p {
-            font-size: 1.2rem;
+        .hero-value {
+            font-size: 1rem;
             color: var(--dim);
             margin-bottom: 36px;
-            max-width: 500px;
+            max-width: 440px;
             line-height: 1.7;
-        }
-
-        .hero-text p strong {
-            color: var(--text);
         }
 
         .store-buttons {
@@ -318,18 +289,19 @@
             display: block;
         }
 
-        /* Sticker Showcase Grid */
+        /* Sticker Showcase */
         .sticker-showcase {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
+            gap: 16px;
+            max-width: 380px;
         }
 
         .sticker-item {
             aspect-ratio: 1;
-            border-radius: 20px;
+            border-radius: 18px;
             background: var(--card);
-            padding: 14px;
+            padding: 12px;
             transition: all 0.4s;
             animation: popIn 0.6s ease backwards;
         }
@@ -382,48 +354,57 @@
             object-fit: contain;
         }
 
-        /* Screenshots Section */
-        .screenshots {
+        /* How It Works */
+        .how-it-works {
             position: relative;
             z-index: 1;
             padding: 100px 40px;
+        }
+
+        .how-it-works h2 {
             text-align: center;
+            font-size: 2rem;
+            margin-bottom: 60px;
         }
 
-        .screenshots h2 {
-            font-size: 2.2rem;
-            margin-bottom: 16px;
-        }
-
-        .screenshots>p {
-            color: var(--dim);
-            max-width: 500px;
-            margin: 0 auto 60px;
-        }
-
-        .screenshot-grid {
+        .steps-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 24px;
-            max-width: 1400px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .screenshot-item {
-            border-radius: 20px;
+        .step-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
             overflow: hidden;
-            transition: transform 0.4s;
+            transition: all 0.3s;
         }
 
-        .screenshot-item:hover {
-            transform: scale(1.05);
-            z-index: 10;
+        .step-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-8px);
         }
 
-        .screenshot-item img {
+        .step-card img {
             width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            height: auto;
+        }
+
+        .step-content {
+            padding: 24px;
+        }
+
+        .step-content h3 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            color: var(--dim);
+            font-size: 0.95rem;
         }
 
         /* Gallery */
@@ -436,7 +417,13 @@
 
         .gallery h2 {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+        }
+
+        .gallery>p {
+            text-align: center;
+            color: var(--dim);
             margin-bottom: 40px;
         }
 
@@ -448,7 +435,7 @@
         }
 
         .gallery-scroll img {
-            height: 140px;
+            height: 130px;
             border-radius: 16px;
             filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
         }
@@ -467,51 +454,41 @@
         .features {
             position: relative;
             z-index: 1;
-            padding: 100px 40px;
+            padding: 80px 40px;
             background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.5));
         }
 
         .features h2 {
             text-align: center;
-            font-size: 2rem;
-            margin-bottom: 60px;
+            font-size: 1.8rem;
+            margin-bottom: 50px;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            max-width: 1100px;
+        .features-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        .feature {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 32px 28px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .feature:hover {
-            background: rgba(255, 255, 255, 0.04);
-            transform: translateY(-8px);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-        }
-
-        .feature h3 {
-            font-size: 1.15rem;
-            margin-bottom: 10px;
-        }
-
-        .feature p {
-            color: var(--dim);
+        .feature-tag {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 14px 24px;
+            border-radius: 50px;
             font-size: 0.95rem;
+            color: var(--dim);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-tag::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: 700;
         }
 
         /* CTA */
@@ -523,25 +500,23 @@
         }
 
         .cta-box {
-            max-width: 700px;
+            max-width: 650px;
             margin: 0 auto;
             background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(168, 85, 247, 0.08));
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 32px;
-            padding: 70px 50px;
+            padding: 60px 50px;
         }
 
         .cta h2 {
-            font-size: 2.2rem;
+            font-size: 2rem;
             margin-bottom: 16px;
         }
 
         .cta p {
             color: var(--dim);
-            margin-bottom: 32px;
-            max-width: 450px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 28px;
+            font-size: 0.95rem;
         }
 
         /* Footer */
@@ -578,9 +553,9 @@
         }
 
         /* Responsive */
-        @media (max-width: 1200px) {
-            .screenshot-grid {
-                grid-template-columns: repeat(3, 1fr);
+        @media (max-width: 1100px) {
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -591,8 +566,10 @@
                 gap: 50px;
             }
 
-            .hero-text p {
-                margin: 0 auto 36px;
+            .hero-subtitle,
+            .hero-value {
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .store-buttons {
@@ -600,8 +577,9 @@
             }
 
             .sticker-showcase {
-                max-width: 360px;
+                max-width: 280px;
                 margin: 0 auto;
+                width: 100%;
             }
 
             .floating-sticker {
@@ -615,19 +593,20 @@
             }
 
             .logo img {
-                height: 48px;
+                height: 56px;
             }
 
             .hero {
                 padding: 100px 20px 60px;
             }
 
-            .screenshot-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
+            .steps-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
             }
 
-            .screenshots {
+            .how-it-works {
                 padding: 60px 20px;
             }
 
@@ -640,7 +619,7 @@
             }
 
             .cta-box {
-                padding: 50px 28px;
+                padding: 40px 24px;
             }
         }
 
@@ -652,7 +631,12 @@
 
             .store-btn {
                 width: 100%;
-                max-width: 280px;
+                max-width: 260px;
+                justify-content: center;
+            }
+
+            .feature-tag {
+                width: 100%;
                 justify-content: center;
             }
         }
@@ -671,26 +655,26 @@
 
     <!-- Header -->
     <header>
-        <a href="https://denizozzgur.github.io/meez/" class="logo" aria-label="Meez - AI Sticker Maker">
+        <a href="https://denizozzgur.github.io/meez/" class="logo" aria-label="Meez">
             <img src="images/splash_logo.png" alt="Meez">
         </a>
-        <a href="#download" class="nav-btn">Download Free</a>
+        <a href="#download" class="nav-btn">Get Started</a>
     </header>
 
     <main>
-        <!-- Hero with Sticker Grid -->
+        <!-- Hero -->
         <section class="hero">
             <div class="hero-container">
                 <div class="hero-text">
                     <h1>
-                        Turn Any Photo Into<br>
-                        <span class="gradient">WhatsApp Stickers</span><br>
-                        in Seconds
+                        Turn Text and Photos Into<br>
+                        <span class="gradient">Real Stickers</span>
                     </h1>
-                    <p>
-                        Create <strong>personalized stickers</strong> instantly using AI.
-                        Upload a photo or type a prompt — no design skills needed.
-                        Export to WhatsApp, iMessage & Telegram with one tap.
+                    <p class="hero-subtitle">
+                        Make custom stickers and send them to WhatsApp in a tap.
+                    </p>
+                    <p class="hero-value">
+                        Forget generic packs. Make stickers that actually say what you mean — instantly.
                     </p>
 
                     <div class="store-buttons" id="download">
@@ -713,9 +697,9 @@
 
                 <!-- Sticker Grid -->
                 <div class="sticker-showcase">
-                    <div class="sticker-item"><img src="images/float_1.png" alt="AI sticker example"></div>
-                    <div class="sticker-item"><img src="images/float_2.png" alt="Custom sticker"></div>
-                    <div class="sticker-item"><img src="images/float_3.png" alt="Photo sticker"></div>
+                    <div class="sticker-item"><img src="images/float_1.png" alt="Custom sticker"></div>
+                    <div class="sticker-item"><img src="images/float_2.png" alt="Photo sticker"></div>
+                    <div class="sticker-item"><img src="images/float_3.png" alt="Text sticker"></div>
                     <div class="sticker-item"><img src="images/float_4.png" alt="WhatsApp sticker"></div>
                     <div class="sticker-item"><img src="images/float_5.png" alt="Meme sticker"></div>
                     <div class="sticker-item"><img src="images/float_6.png" alt="Emoji sticker"></div>
@@ -723,24 +707,45 @@
             </div>
         </section>
 
-        <!-- App Screenshots -->
-        <section class="screenshots">
-            <h2>See It In Action</h2>
-            <p>From prompt to WhatsApp in seconds</p>
-            <div class="screenshot-grid">
-                <div class="screenshot-item"><img src="images/screenshots/step1_create.png" alt="Create stickers"></div>
-                <div class="screenshot-item"><img src="images/screenshots/step2_style.png" alt="Choose style"></div>
-                <div class="screenshot-item"><img src="images/screenshots/step3_whatsapp.png" alt="Add to WhatsApp">
-                </div>
-                <div class="screenshot-item"><img src="images/screenshots/step4_text.png" alt="Text to stickers"></div>
-                <div class="screenshot-item"><img src="images/screenshots/step5_photo.png" alt="Photo to stickers">
-                </div>
+        <!-- How It Works -->
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps-grid">
+                <article class="step-card">
+                    <img src="images/screenshots/step4_text.png" alt="Type anything. Get a sticker.">
+                    <div class="step-content">
+                        <h3>Type anything. Get a sticker.</h3>
+                        <p>Create stickers from phrases, feelings, or inside jokes.</p>
+                    </div>
+                </article>
+                <article class="step-card">
+                    <img src="images/screenshots/step5_photo.png" alt="Turn photos into stickers">
+                    <div class="step-content">
+                        <h3>Turn photos into stickers</h3>
+                        <p>Use your own photos to make expressive stickers in seconds.</p>
+                    </div>
+                </article>
+                <article class="step-card">
+                    <img src="images/screenshots/step2_style.png" alt="Choose style and mood">
+                    <div class="step-content">
+                        <h3>Choose style and mood</h3>
+                        <p>Pick how your stickers look — from realistic to fun.</p>
+                    </div>
+                </article>
+                <article class="step-card">
+                    <img src="images/screenshots/step3_whatsapp.png" alt="Send to WhatsApp in one tap">
+                    <div class="step-content">
+                        <h3>Send to WhatsApp in one tap</h3>
+                        <p>Add your stickers to chats instantly — no extra steps.</p>
+                    </div>
+                </article>
             </div>
         </section>
 
         <!-- Gallery -->
         <section class="gallery">
-            <h2>✨ Made with Meez</h2>
+            <h2>See what's trending</h2>
+            <p>Explore popular stickers from the Meez community.</p>
             <div class="gallery-scroll">
                 <img src="images/community/sticker_0.png" alt="Community sticker">
                 <img src="images/community/sticker_1.png" alt="Community sticker">
@@ -762,47 +767,22 @@
 
         <!-- Features -->
         <section class="features">
-            <h2>Why People Love Meez</h2>
-            <div class="features-grid">
-                <article class="feature">
-                    <div class="feature-icon">🤖</div>
-                    <h3>AI That Gets You</h3>
-                    <p>Describe anything and watch AI bring your vision to life instantly.</p>
-                </article>
-                <article class="feature">
-                    <div class="feature-icon">📱</div>
-                    <h3>One-Tap Export</h3>
-                    <p>Send stickers to WhatsApp, iMessage, or Telegram with a single tap.</p>
-                </article>
-                <article class="feature">
-                    <div class="feature-icon">🎨</div>
-                    <h3>10+ Art Styles</h3>
-                    <p>3D, Anime, Pixel Art, Hand-drawn — find your perfect vibe.</p>
-                </article>
-                <article class="feature">
-                    <div class="feature-icon">⚡</div>
-                    <h3>30-Second Packs</h3>
-                    <p>Get 10 unique stickers generated before you finish reading this.</p>
-                </article>
-                <article class="feature">
-                    <div class="feature-icon">👥</div>
-                    <h3>Community</h3>
-                    <p>Discover trending packs and share your creations with the world.</p>
-                </article>
-                <article class="feature">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Private & Secure</h3>
-                    <p>Your photos are processed and deleted. We never store them.</p>
-                </article>
+            <h2>What you get</h2>
+            <div class="features-list">
+                <span class="feature-tag">Generate stickers from text or photos</span>
+                <span class="feature-tag">Export to WhatsApp with one tap</span>
+                <span class="feature-tag">Custom styles for every mood</span>
+                <span class="feature-tag">Explore trending stickers</span>
+                <span class="feature-tag">No templates. No editing. Just stickers.</span>
             </div>
         </section>
 
         <!-- CTA -->
         <section class="cta">
             <div class="cta-box">
-                <h2>Start Creating Today</h2>
-                <p>Join thousands making custom stickers every day. Free to download.</p>
-                <a href="#download" class="nav-btn">Get Meez Free</a>
+                <h2>Start making stickers that feel like you</h2>
+                <p>Works with WhatsApp. No account required.</p>
+                <a href="#download" class="nav-btn">Get Started Free</a>
             </div>
         </section>
     </main>
