@@ -4,12 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meez - AI Sticker Maker | Create Custom Stickers Instantly</title>
+
+    <!-- SEO -->
+    <title>Meez - Free AI Sticker Maker | Create WhatsApp Stickers from Photos</title>
     <meta name="description"
-        content="Create personalized stickers from any photo using AI. Export to WhatsApp, iMessage, and more.">
+        content="Turn your photos into custom WhatsApp stickers instantly with AI. No design skills needed. Create personalized sticker packs for free. Export to WhatsApp, iMessage, Telegram.">
+    <meta name="keywords"
+        content="AI sticker maker, WhatsApp sticker creator, custom stickers, photo to sticker, sticker generator, meme maker, emoji creator">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Meez - Create Custom AI Stickers for WhatsApp">
+    <meta property="og:description"
+        content="The easiest way to make personalized stickers. Upload a photo or type a prompt — AI does the rest.">
+    <meta property="og:image" content="https://denizozzgur.github.io/meez/images/splash_logo.png">
+    <meta property="og:url" content="https://denizozzgur.github.io/meez/">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "Meez - AI Sticker Maker",
+        "description": "Create custom stickers from photos using AI. Export to WhatsApp, iMessage, Telegram.",
+        "applicationCategory": "PhotoApplication",
+        "operatingSystem": "iOS, Android",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -18,140 +44,49 @@
         }
 
         :root {
-            --bg-dark: #020617;
-            --bg-card: #0F172A;
+            --bg: #020617;
+            --card: #0F172A;
             --accent: #38BDF8;
             --purple: #A855F7;
-            --pink: #EC4899;
             --text: #F1F5F9;
-            --text-dim: #64748B;
+            --dim: #64748B;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--bg-dark);
+            background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Floating Stickers Background */
-        .floating-stickers {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .floating-sticker {
-            position: absolute;
-            animation: floatAround 20s ease-in-out infinite;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
-        }
-
-        .floating-sticker:nth-child(1) {
-            width: 120px;
-            top: 5%;
-            left: 5%;
-            animation-delay: 0s;
-        }
-
-        .floating-sticker:nth-child(2) {
-            width: 100px;
-            top: 15%;
-            right: 10%;
-            animation-delay: -3s;
-        }
-
-        .floating-sticker:nth-child(3) {
-            width: 90px;
-            top: 40%;
-            left: 3%;
-            animation-delay: -6s;
-        }
-
-        .floating-sticker:nth-child(4) {
-            width: 110px;
-            top: 60%;
-            right: 5%;
-            animation-delay: -9s;
-        }
-
-        .floating-sticker:nth-child(5) {
-            width: 80px;
-            top: 80%;
-            left: 8%;
-            animation-delay: -12s;
-        }
-
-        .floating-sticker:nth-child(6) {
-            width: 95px;
-            bottom: 10%;
-            right: 15%;
-            animation-delay: -15s;
-        }
-
-        .floating-sticker:nth-child(7) {
-            width: 85px;
-            top: 30%;
-            right: 3%;
-            animation-delay: -18s;
-        }
-
-        @keyframes floatAround {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg) scale(1);
-                opacity: 0.6;
-            }
-
-            25% {
-                transform: translateY(-30px) rotate(5deg) scale(1.05);
-                opacity: 0.8;
-            }
-
-            50% {
-                transform: translateY(0) rotate(-3deg) scale(1);
-                opacity: 0.6;
-            }
-
-            75% {
-                transform: translateY(20px) rotate(3deg) scale(0.95);
-                opacity: 0.7;
-            }
-        }
-
-        /* Header */
+        /* Header - Logo Only */
         header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
-            padding: 20px 40px;
+            padding: 16px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(2, 6, 23, 0.9);
+            background: rgba(2, 6, 23, 0.85);
             backdrop-filter: blur(20px);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            text-decoration: none;
-            color: var(--text);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .logo img {
-            height: 40px;
+            height: 48px;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
         }
 
         .nav-btn {
@@ -161,71 +96,97 @@
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 0.95rem;
+            transition: all 0.3s;
         }
 
         .nav-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
         }
 
         /* Hero */
         .hero {
-            position: relative;
-            z-index: 1;
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 120px 40px 60px;
+            padding: 120px 40px 80px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 70% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
+            pointer-events: none;
         }
 
         .hero-container {
-            max-width: 1400px;
+            max-width: 1300px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            gap: 80px;
             align-items: center;
         }
 
-        .hero-text h1 {
-            font-size: clamp(3rem, 5vw, 4.5rem);
-            font-weight: 900;
-            line-height: 1.1;
+        .hero h1 {
+            font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.15;
             margin-bottom: 24px;
         }
 
-        .hero-text h1 .gradient {
-            background: linear-gradient(135deg, var(--accent), var(--purple), var(--pink));
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent), var(--purple));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: gradientMove 5s ease infinite;
-        }
-
-        @keyframes gradientMove {
-
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
         }
 
         .hero-text p {
-            font-size: 1.25rem;
-            color: var(--text-dim);
-            line-height: 1.7;
-            margin-bottom: 40px;
-            max-width: 500px;
+            font-size: 1.15rem;
+            color: var(--dim);
+            margin-bottom: 32px;
+            max-width: 480px;
+        }
+
+        .hero-text p strong {
+            color: var(--text);
+        }
+
+        .benefits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 36px;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--dim);
+        }
+
+        .benefit::before {
+            content: '✓';
+            color: var(--accent);
+            font-weight: 700;
         }
 
         .store-buttons {
             display: flex;
-            gap: 16px;
+            gap: 14px;
             flex-wrap: wrap;
         }
 
@@ -233,183 +194,119 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px 24px;
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 14px 22px;
+            border-radius: 14px;
             text-decoration: none;
             color: var(--text);
             transition: all 0.3s;
         }
 
         .store-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
         }
 
         .store-btn svg {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
         }
 
         .store-btn small {
-            font-size: 0.75rem;
-            color: var(--text-dim);
+            font-size: 0.7rem;
+            color: var(--dim);
         }
 
         .store-btn strong {
-            font-size: 1.1rem;
+            font-size: 1rem;
             display: block;
         }
 
-        /* Sticker Showcase */
-        .sticker-showcase {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
+        /* Hero Image */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .sticker-item {
-            aspect-ratio: 1;
+        .hero-visual img {
+            max-width: 100%;
+            max-height: 600px;
             border-radius: 24px;
-            overflow: hidden;
-            background: var(--bg-card);
-            padding: 15px;
-            transition: transform 0.4s, box-shadow 0.4s;
-            animation: popIn 0.6s ease backwards;
+            filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.4));
         }
 
-        .sticker-item:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .sticker-item:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .sticker-item:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .sticker-item:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-
-        .sticker-item:nth-child(5) {
-            animation-delay: 0.5s;
-        }
-
-        .sticker-item:nth-child(6) {
-            animation-delay: 0.6s;
-        }
-
-        @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8) rotate(-10deg);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1) rotate(0);
-            }
-        }
-
-        .sticker-item:hover {
-            transform: scale(1.1) rotate(3deg);
-            box-shadow: 0 20px 50px rgba(56, 189, 248, 0.2);
-            z-index: 10;
-        }
-
-        .sticker-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* Features */
-        .features {
-            position: relative;
-            z-index: 1;
+        /* App Screenshots Section */
+        .screenshots {
             padding: 100px 40px;
-            background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.8));
-        }
-
-        .features h2 {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
         }
 
-        .features-grid {
+        .screenshots h2 {
+            font-size: 2.2rem;
+            margin-bottom: 16px;
+        }
+
+        .screenshots>p {
+            color: var(--dim);
+            max-width: 500px;
+            margin: 0 auto 60px;
+        }
+
+        .screenshot-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            padding: 40px 30px;
-            text-align: center;
-            transition: all 0.3s;
+        .screenshot-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            transition: transform 0.4s;
         }
 
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            transform: translateY(-10px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+        .screenshot-item:hover {
+            transform: scale(1.05);
+            z-index: 10;
         }
 
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            color: var(--text-dim);
-            line-height: 1.6;
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
 
         /* Gallery */
         .gallery {
-            position: relative;
-            z-index: 1;
-            padding: 80px 20px;
+            padding: 80px 0;
             overflow: hidden;
         }
 
         .gallery h2 {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 40px;
         }
 
         .gallery-scroll {
             display: flex;
             gap: 20px;
-            animation: scrollGallery 30s linear infinite;
+            animation: scroll 25s linear infinite;
             width: max-content;
         }
 
         .gallery-scroll img {
-            height: 150px;
-            width: auto;
-            border-radius: 20px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+            height: 140px;
+            border-radius: 16px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
         }
 
-        @keyframes scrollGallery {
+        @keyframes scroll {
             0% {
                 transform: translateX(0);
             }
@@ -419,59 +316,102 @@
             }
         }
 
+        /* Features */
+        .features {
+            padding: 100px 40px;
+            background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.5));
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 60px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 32px 28px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-8px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .feature h3 {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: var(--dim);
+            font-size: 0.95rem;
+        }
+
         /* CTA */
         .cta {
-            position: relative;
-            z-index: 1;
             padding: 100px 40px;
             text-align: center;
         }
 
         .cta-box {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(168, 85, 247, 0.1));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
-            padding: 80px 60px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(168, 85, 247, 0.08));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+            padding: 70px 50px;
         }
 
         .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 16px;
         }
 
         .cta p {
-            color: var(--text-dim);
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-        }
-
-        .cta .nav-btn {
-            padding: 18px 50px;
-            font-size: 1.1rem;
+            color: var(--dim);
+            margin-bottom: 32px;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* Footer */
         footer {
-            position: relative;
-            z-index: 1;
             padding: 40px;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 28px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .footer-links a {
-            color: var(--text-dim);
+            color: var(--dim);
             text-decoration: none;
+            font-size: 0.9rem;
             transition: color 0.3s;
         }
 
@@ -480,199 +420,226 @@
         }
 
         .copyright {
-            color: var(--text-dim);
-            font-size: 0.9rem;
+            color: var(--dim);
+            font-size: 0.85rem;
         }
 
         /* Responsive */
+        @media (max-width: 1200px) {
+            .screenshot-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (max-width: 968px) {
             .hero-container {
                 grid-template-columns: 1fr;
                 text-align: center;
+                gap: 50px;
             }
 
             .hero-text p {
-                margin: 0 auto 40px;
+                margin: 0 auto 32px;
+            }
+
+            .benefits {
+                justify-content: center;
             }
 
             .store-buttons {
                 justify-content: center;
             }
 
-            .sticker-showcase {
-                max-width: 400px;
-                margin: 40px auto 0;
-            }
-
-            .floating-sticker {
-                display: none;
+            .hero-visual img {
+                max-height: 450px;
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             header {
-                padding: 15px 20px;
+                padding: 12px 20px;
+            }
+
+            .logo img {
+                height: 40px;
             }
 
             .hero {
-                padding: 100px 20px 40px;
+                padding: 100px 20px 60px;
             }
 
+            .screenshot-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .features {
+                padding: 60px 20px;
+            }
+
+            .cta {
+                padding: 60px 20px;
+            }
+
+            .cta-box {
+                padding: 50px 28px;
+            }
+        }
+
+        @media (max-width: 500px) {
             .store-buttons {
                 flex-direction: column;
                 align-items: center;
             }
 
-            .cta-box {
-                padding: 50px 30px;
+            .store-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Floating Stickers Background -->
-    <div class="floating-stickers">
-        <img src="images/float_1.png" class="floating-sticker" alt="">
-        <img src="images/float_2.png" class="floating-sticker" alt="">
-        <img src="images/float_3.png" class="floating-sticker" alt="">
-        <img src="images/float_4.png" class="floating-sticker" alt="">
-        <img src="images/float_5.png" class="floating-sticker" alt="">
-        <img src="images/float_6.png" class="floating-sticker" alt="">
-        <img src="images/float_7.png" class="floating-sticker" alt="">
-    </div>
-
     <!-- Header -->
     <header>
-        <a href="/" class="logo">
-            <img src="images/splash_logo.png" alt="Meez">
-            Meez
+        <a href="/" class="logo" aria-label="Meez">
+            <img src="images/splash_logo.png" alt="Meez - AI Sticker Maker">
         </a>
         <a href="#download" class="nav-btn">Download Free</a>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-container">
-            <div class="hero-text">
-                <h1>
-                    Create <span class="gradient">AI Stickers</span><br>
-                    in Seconds
-                </h1>
-                <p>
-                    Transform any idea into stunning stickers using AI.
-                    Just type a prompt or upload a photo — we'll do the magic.
-                    Export instantly to WhatsApp, iMessage & more.
-                </p>
-                <div class="store-buttons" id="download">
-                    <a href="#" class="store-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                        </svg>
-                        <div>
-                            <small>Download on the</small>
-                            <strong>App Store</strong>
-                        </div>
-                    </a>
-                    <a href="#" class="store-btn">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
-                        </svg>
-                        <div>
-                            <small>Get it on</small>
-                            <strong>Google Play</strong>
-                        </div>
-                    </a>
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <h1>
+                        Turn Any Photo Into<br>
+                        <span class="gradient">WhatsApp Stickers</span>
+                    </h1>
+                    <p>
+                        Create <strong>personalized stickers</strong> in seconds using AI.
+                        Just upload a photo or describe what you want — no design skills needed.
+                    </p>
+
+                    <div class="benefits">
+                        <span class="benefit">Unlimited stickers</span>
+                        <span class="benefit">One-tap WhatsApp export</span>
+                        <span class="benefit">10+ art styles</span>
+                    </div>
+
+                    <div class="store-buttons" id="download">
+                        <a href="#" class="store-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+                            </svg>
+                            <div><small>Download on the</small><strong>App Store</strong></div>
+                        </a>
+                        <a href="#" class="store-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" />
+                            </svg>
+                            <div><small>Get it on</small><strong>Google Play</strong></div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <img src="images/screenshots/step1_create.png" alt="Meez app - Create personalized stickers">
                 </div>
             </div>
+        </section>
 
-            <!-- Sticker Grid -->
-            <div class="sticker-showcase">
-                <div class="sticker-item"><img src="images/float_1.png" alt="Sticker"></div>
-                <div class="sticker-item"><img src="images/float_2.png" alt="Sticker"></div>
-                <div class="sticker-item"><img src="images/float_3.png" alt="Sticker"></div>
-                <div class="sticker-item"><img src="images/float_4.png" alt="Sticker"></div>
-                <div class="sticker-item"><img src="images/float_5.png" alt="Sticker"></div>
-                <div class="sticker-item"><img src="images/float_6.png" alt="Sticker"></div>
+        <!-- App Screenshots -->
+        <section class="screenshots">
+            <h2>See It In Action</h2>
+            <p>From prompt to WhatsApp in seconds</p>
+            <div class="screenshot-grid">
+                <div class="screenshot-item"><img src="images/screenshots/step1_create.png"
+                        alt="Create stickers that feel personal"></div>
+                <div class="screenshot-item"><img src="images/screenshots/step2_style.png"
+                        alt="Choose your style and mood"></div>
+                <div class="screenshot-item"><img src="images/screenshots/step3_whatsapp.png"
+                        alt="Add to WhatsApp in one tap"></div>
+                <div class="screenshot-item"><img src="images/screenshots/step4_text.png" alt="Turn text into stickers">
+                </div>
+                <div class="screenshot-item"><img src="images/screenshots/step5_photo.png"
+                        alt="Turn your photos into stickers"></div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Scrolling Gallery - Made with Meez -->
-    <section class="gallery">
-        <h2>✨ Made with Meez</h2>
-        <div class="gallery-scroll">
-            <img src="images/community/sticker_0.png" alt="">
-            <img src="images/community/sticker_1.png" alt="">
-            <img src="images/community/sticker_2.png" alt="">
-            <img src="images/community/sticker_3.png" alt="">
-            <img src="images/community/sticker_4.png" alt="">
-            <img src="images/community/sticker_5.png" alt="">
-            <img src="images/community/sticker_6.png" alt="">
-            <img src="images/community/sticker_7.png" alt="">
-            <img src="images/community/sticker_8.png" alt="">
-            <img src="images/community/sticker_9.png" alt="">
-            <!-- Duplicate for seamless scroll -->
-            <img src="images/community/sticker_0.png" alt="">
-            <img src="images/community/sticker_1.png" alt="">
-            <img src="images/community/sticker_2.png" alt="">
-            <img src="images/community/sticker_3.png" alt="">
-            <img src="images/community/sticker_4.png" alt="">
-            <img src="images/community/sticker_5.png" alt="">
-            <img src="images/community/sticker_6.png" alt="">
-            <img src="images/community/sticker_7.png" alt="">
-            <img src="images/community/sticker_8.png" alt="">
-            <img src="images/community/sticker_9.png" alt="">
-        </div>
-    </section>
+        <!-- Gallery -->
+        <section class="gallery">
+            <h2>✨ Made with Meez</h2>
+            <div class="gallery-scroll">
+                <img src="images/community/sticker_0.png" alt="Community sticker">
+                <img src="images/community/sticker_1.png" alt="Community sticker">
+                <img src="images/community/sticker_2.png" alt="Community sticker">
+                <img src="images/community/sticker_3.png" alt="Community sticker">
+                <img src="images/community/sticker_4.png" alt="Community sticker">
+                <img src="images/community/sticker_5.png" alt="Community sticker">
+                <img src="images/community/sticker_6.png" alt="Community sticker">
+                <img src="images/community/sticker_7.png" alt="Community sticker">
+                <img src="images/community/sticker_8.png" alt="Community sticker">
+                <img src="images/community/sticker_9.png" alt="Community sticker">
+                <img src="images/community/sticker_0.png" alt="">
+                <img src="images/community/sticker_1.png" alt="">
+                <img src="images/community/sticker_2.png" alt="">
+                <img src="images/community/sticker_3.png" alt="">
+                <img src="images/community/sticker_4.png" alt="">
+            </div>
+        </section>
 
-    <!-- Features -->
-    <section class="features">
-        <h2>Why Meez?</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🤖</div>
-                <h3>AI-Powered Magic</h3>
-                <p>State-of-the-art AI creates unique stickers from your prompts in seconds.</p>
+        <!-- Features -->
+        <section class="features">
+            <h2>Why People Love Meez</h2>
+            <div class="features-grid">
+                <article class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI That Gets You</h3>
+                    <p>Describe anything and watch AI bring your vision to life instantly.</p>
+                </article>
+                <article class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>One-Tap Export</h3>
+                    <p>Send stickers to WhatsApp, iMessage, or Telegram with a single tap.</p>
+                </article>
+                <article class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h3>10+ Art Styles</h3>
+                    <p>3D, Anime, Pixel Art, Hand-drawn — find your perfect vibe.</p>
+                </article>
+                <article class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>30-Second Packs</h3>
+                    <p>Get 10 unique stickers generated before you finish reading this.</p>
+                </article>
+                <article class="feature">
+                    <div class="feature-icon">👥</div>
+                    <h3>Community</h3>
+                    <p>Discover trending packs and share your creations with the world.</p>
+                </article>
+                <article class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Private & Secure</h3>
+                    <p>Your photos are processed and deleted. We never store them.</p>
+                </article>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>WhatsApp Ready</h3>
-                <p>One-tap export to WhatsApp, iMessage, Telegram and more.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎨</div>
-                <h3>Multiple Styles</h3>
-                <p>3D, Pixel Art, Anime, Hand-drawn — choose your vibe.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>Full sticker pack in under 30 seconds. No waiting around.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">👥</div>
-                <h3>Community</h3>
-                <p>Discover trending packs and share your creations with the world.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>Private & Secure</h3>
-                <p>Your photos are never stored. We respect your privacy.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CTA -->
-    <section class="cta">
-        <div class="cta-box">
-            <h2>Ready to Create?</h2>
-            <p>Join thousands making custom stickers every day.</p>
-            <a href="#download" class="nav-btn">Get Meez Free</a>
-        </div>
-    </section>
+        <!-- CTA -->
+        <section class="cta">
+            <div class="cta-box">
+                <h2>Start Creating Today</h2>
+                <p>Join thousands making custom stickers every day. Free to download.</p>
+                <a href="#download" class="nav-btn">Get Meez Free</a>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
