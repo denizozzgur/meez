@@ -690,7 +690,18 @@
         <a href="https://denizozzgur.github.io/meez/" class="logo" aria-label="Meez - AI Sticker Maker">
             <img src="images/splash_logo.png" alt="Meez">
         </a>
-        <a href="#download" class="nav-btn">Download Free</a>
+        <div style="display:flex;align-items:center;gap:16px;">
+            <select id="lang-select" onchange="window.location.href=this.value"
+                style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:8px 12px;border-radius:8px;font-size:0.85rem;cursor:pointer;">
+                <option value="index.html" selected>🇬🇧 English</option>
+                <option value="es.html">🇪🇸 Español</option>
+                <option value="fr.html">🇫🇷 Français</option>
+                <option value="de.html">🇩🇪 Deutsch</option>
+                <option value="tr.html">🇹🇷 Türkçe</option>
+                <option value="zh.html">🇨🇳 中文</option>
+            </select>
+            <a href="#download" class="nav-btn">Download Free</a>
+        </div>
     </header>
 
     <main>
