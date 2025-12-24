@@ -39,6 +39,10 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
   bool _hasInput = false;
   File? _selectedImage;
   String? _loadingProgress;
+  
+  // Caption and language settings
+  bool _captionsEnabled = true;
+  String _selectedLanguage = 'en';
 
   @override
   void initState() {
@@ -56,6 +60,20 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
         _shakeController.reset();
       }
     });
+    
+    // Load caption preferences
+    _loadCaptionPreferences();
+  }
+  
+  Future<void> _loadCaptionPreferences() async {
+    final enabled = await LanguageService.areCaptionsEnabled();
+    final lang = await LanguageService.getPreferredLanguage();
+    if (mounted) {
+      setState(() {
+        _captionsEnabled = enabled;
+        _selectedLanguage = lang;
+      });
+    }
   }
 
   @override
@@ -443,6 +461,62 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
                     ),
                   );
                 }).toList(),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Caption section with toggle
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Captions", style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 13, fontWeight: FontWeight.w500)),
+                  Switch.adaptive(
+                    value: _captionsEnabled,
+                    activeColor: AppColors.accentBlue,
+                    onChanged: (value) async {
+                      setState(() => _captionsEnabled = value);
+                      setSheetState(() {});
+                      await LanguageService.setCaptionsEnabled(value);
+                    },
+                  ),
+                ],
+              ),
+              
+              // Language selector (only visible when captions enabled)
+              AnimatedCrossFade(
+                firstChild: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: LanguageService.supportedLanguages.map((langCode) {
+                        final isSelected = _selectedLanguage == langCode;
+                        final langName = LanguageService.getLanguageName(langCode);
+                        return GestureDetector(
+                          onTap: () async {
+                            setState(() => _selectedLanguage = langCode);
+                            setSheetState(() {});
+                            await LanguageService.setPreferredLanguage(langCode);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: isSelected ? AppColors.accentBlue.withOpacity(0.15) : Colors.white.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: isSelected ? AppColors.accentBlue.withOpacity(0.4) : Colors.white.withOpacity(0.1)),
+                            ),
+                            child: Text(langName, style: TextStyle(color: isSelected ? Colors.white : Colors.white.withOpacity(0.6), fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400)),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+                secondChild: const SizedBox.shrink(),
+                crossFadeState: _captionsEnabled ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 200),
               ),
               
               const SizedBox(height: 24),
