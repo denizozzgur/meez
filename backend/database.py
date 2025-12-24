@@ -11,20 +11,31 @@ from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 
 # Get database URL from Railway (auto-injected) or use SQLite for local dev
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./meez_local.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "")
+
+print(f"🔍 DATABASE_URL present: {bool(DATABASE_URL)}")
+print(f"🔍 DATABASE_URL starts with: {DATABASE_URL[:30] if DATABASE_URL else 'EMPTY'}...")
+
+if not DATABASE_URL:
+    print("⚠️ No DATABASE_URL found, using SQLite for local development")
+    DATABASE_URL = "sqlite:///./meez_local.db"
 
 # Railway uses postgres:// but SQLAlchemy needs postgresql://
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    print("✅ Converted postgres:// to postgresql://")
 
-# Create engine with connection pooling
-engine = create_engine(
-    DATABASE_URL,
-    pool_size=5,
-    max_overflow=10,
-    pool_pre_ping=True,  # Check connection health
-    echo=False  # Set True for SQL debugging
-)
+# Create engine with appropriate settings
+if DATABASE_URL.startswith("sqlite"):
+    engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+else:
+    engine = create_engine(
+        DATABASE_URL,
+        pool_size=5,
+        max_overflow=10,
+        pool_pre_ping=True,
+        echo=False
+    )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
