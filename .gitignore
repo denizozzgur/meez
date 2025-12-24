@@ -12,6 +12,24 @@
 .swiftpm/
 migrate_working_dir/
 
+# Secrets and Environment Variables - NEVER COMMIT
+.env
+.env.*
+*.env
+backend/.env
+**/.env
+
+# Python Virtual Environment
+venv/
+backend/venv/
+**/venv/
+__pycache__/
+*.py[cod]
+
+# Backend logs
+backend.log
+*.log
+
 # IntelliJ related
 *.iml
 *.ipr
