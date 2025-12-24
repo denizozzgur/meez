@@ -430,10 +430,14 @@ class AIProcessor:
             settings = item["settings"]
             english_caption = item["text"]
             
-            # Translate caption based on language
-            caption_text = self.get_translated_caption(english_caption, language)
-            
-            print(f"--- Processing: '{english_caption}' -> '{caption_text}' (lang: {language}) ---")
+            # If language is empty, captions are disabled - use empty string
+            if not language:
+                caption_text = ""
+                print(f"--- Processing: '{english_caption}' (captions DISABLED) ---")
+            else:
+                # Translate caption based on language
+                caption_text = self.get_translated_caption(english_caption, language)
+                print(f"--- Processing: '{english_caption}' -> '{caption_text}' (lang: {language}) ---")
             
             # Step 1: Generate with Seedream v4/edit (expression transformation)
             image_url = self.call_fal_seedream(
@@ -700,10 +704,14 @@ OUTPUT (JSON only):
             prompt_text = item["prompt"]
             english_caption = item.get("caption", "")
             
-            # Translate caption based on language
-            caption = self.get_translated_caption(english_caption, language)
-            
-            print(f"--- Processing text sticker: '{english_caption}' -> '{caption}' (lang: {language}) ---")
+            # If language is empty, captions are disabled - use empty string
+            if not language:
+                caption = ""
+                print(f"--- Processing text sticker: '{english_caption}' (captions DISABLED) ---")
+            else:
+                # Translate caption based on language
+                caption = self.get_translated_caption(english_caption, language)
+                print(f"--- Processing text sticker: '{english_caption}' -> '{caption}' (lang: {language}) ---")
             
             # Step 1: Generate image with Seedream (NO text in prompt)
             image_url = self.call_fal_seedream_text(prompt_text)

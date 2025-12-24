@@ -231,6 +231,8 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
               ),
               
               // Mood - Horizontal scroll
+              Text("Customize Stickers", style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600)),
+              const SizedBox(height: 16),
               _buildMinimalSection("Mood", 
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
