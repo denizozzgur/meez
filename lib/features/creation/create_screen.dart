@@ -204,217 +204,195 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      isScrollControlled: true, // Allow it to be taller if needed
+      isScrollControlled: true,
       builder: (context) => StatefulBuilder(
         builder: (context, setSheetState) => Container(
-          padding: const EdgeInsets.fromLTRB(24, 16, 24, 40),
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color(0xFF1E293B),
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 32),
+          decoration: BoxDecoration(
+            color: const Color(0xFF0F172A),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            border: Border.all(color: Colors.white.withOpacity(0.05)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Handle bar
+              // Compact handle bar
               Center(
                 child: Container(
-                  width: 36,
-                  height: 4,
+                  width: 32,
+                  height: 3,
+                  margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    color: Colors.white.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
               
-              // Header Row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Customize Style", 
-                    style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)
+              // Mood - Horizontal scroll
+              _buildMinimalSection("Mood", 
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: _moodOptions.entries.map((e) {
+                      final selected = _selectedMoods.contains(e.key);
+                      return _buildMinimalChip(
+                        "${e.value['emoji']} ${e.value['label']}", 
+                        selected, 
+                        () { setState(() => _toggleMood(e.key)); setSheetState(() {}); }
+                      );
+                    }).toList(),
                   ),
-                  if (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _selectedMoods.clear();
-                          _selectedStyles.clear();
-                        });
-                        setSheetState(() {});
-                      },
-                      child: Text(
-                        "Reset",
-                        style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 14),
-                      ),
-                    ),
-                ],
+                ),
               ),
               
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
               
-              // Mood Section
-              Text("Mood", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 13, fontWeight: FontWeight.w500)),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: _moodOptions.entries.map((e) {
-                  bool selected = _selectedMoods.contains(e.key);
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() => _toggleMood(e.key));
-                      setSheetState(() {});
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: selected ? Colors.white : Colors.white.withOpacity(0.06),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: selected ? Colors.white : Colors.white.withOpacity(0.1),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(e.value['emoji'], style: const TextStyle(fontSize: 16)),
-                          const SizedBox(width: 6),
-                          Text(
-                            e.value['label'],
-                            style: TextStyle(
-                              color: selected ? Colors.black : Colors.white.withOpacity(0.9),
-                              fontSize: 14,
-                              fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-              
-              const SizedBox(height: 24),
-              
-              // Style Section
-              Text("Style", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 13, fontWeight: FontWeight.w500)),
-              const SizedBox(height: 12),
-              Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: _styleOptions.entries.map((e) {
-                  bool selected = _selectedStyles.contains(e.key);
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() => _toggleStyle(e.key));
-                      setSheetState(() {});
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                      decoration: BoxDecoration(
-                        color: selected ? Colors.white : Colors.white.withOpacity(0.06),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: selected ? Colors.white : Colors.white.withOpacity(0.1),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(e.value['emoji'], style: const TextStyle(fontSize: 16)),
-                          const SizedBox(width: 6),
-                          Text(
-                            e.value['label'],
-                            style: TextStyle(
-                              color: selected ? Colors.black : Colors.white.withOpacity(0.9),
-                              fontSize: 14,
-                              fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-              
-              const SizedBox(height: 24),
-              
-              // Caption section with toggle
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Captions", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 13, fontWeight: FontWeight.w500)),
-                  Switch.adaptive(
-                    value: _captionsEnabled,
-                    activeColor: AppColors.accentBlue,
-                    onChanged: (value) async {
-                      setState(() => _captionsEnabled = value);
-                      setSheetState(() {});
-                      await LanguageService.setCaptionsEnabled(value);
-                    },
+              // Style - Horizontal scroll
+              _buildMinimalSection("Style",
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: _styleOptions.entries.map((e) {
+                      final selected = _selectedStyles.contains(e.key);
+                      return _buildMinimalChip(
+                        "${e.value['emoji']} ${e.value['label']}", 
+                        selected, 
+                        () { setState(() => _toggleStyle(e.key)); setSheetState(() {}); }
+                      );
+                    }).toList(),
                   ),
-                ],
+                ),
               ),
               
-              // Language selector (only visible when captions enabled)
-              AnimatedCrossFade(
-                firstChild: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(height: 16),
+              
+              // Caption toggle - Compact row
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.03),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
                   children: [
-                    const SizedBox(height: 8),
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: LanguageService.supportedLanguages.map((langCode) {
-                        final isSelected = _selectedLanguage == langCode;
-                        final langName = LanguageService.getLanguageName(langCode);
-                        return GestureDetector(
-                          onTap: () async {
-                            setState(() => _selectedLanguage = langCode);
-                            setSheetState(() {});
-                            await LanguageService.setPreferredLanguage(langCode);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                            decoration: BoxDecoration(
-                              color: isSelected ? AppColors.accentBlue.withOpacity(0.15) : Colors.white.withOpacity(0.06),
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: isSelected ? AppColors.accentBlue.withOpacity(0.5) : Colors.white.withOpacity(0.1)),
-                            ),
-                            child: Text(langName, style: TextStyle(color: isSelected ? Colors.white : Colors.white.withOpacity(0.7), fontSize: 14, fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500)),
-                          ),
-                        );
-                      }).toList(),
+                    Icon(Icons.text_fields_rounded, size: 18, color: Colors.white.withOpacity(0.5)),
+                    const SizedBox(width: 10),
+                    Text("Captions", style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 14)),
+                    const Spacer(),
+                    Transform.scale(
+                      scale: 0.8,
+                      child: Switch.adaptive(
+                        value: _captionsEnabled,
+                        activeColor: AppColors.accentBlue,
+                        onChanged: (value) async {
+                          setState(() => _captionsEnabled = value);
+                          setSheetState(() {});
+                          await LanguageService.setCaptionsEnabled(value);
+                        },
+                      ),
                     ),
                   ],
                 ),
-                secondChild: const SizedBox.shrink(),
-                crossFadeState: _captionsEnabled ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                duration: const Duration(milliseconds: 200),
               ),
               
-              const SizedBox(height: 32),
+              // Language selector - Inline horizontal
+              if (_captionsEnabled) ...[
+                const SizedBox(height: 12),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: LanguageService.supportedLanguages.map((lang) {
+                      final selected = _selectedLanguage == lang;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: GestureDetector(
+                          onTap: () async {
+                            setState(() => _selectedLanguage = lang);
+                            setSheetState(() {});
+                            await LanguageService.setPreferredLanguage(lang);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: selected ? AppColors.accentBlue.withOpacity(0.2) : Colors.transparent,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: selected ? AppColors.accentBlue : Colors.white.withOpacity(0.08),
+                              ),
+                            ),
+                            child: Text(
+                              LanguageService.getLanguageName(lang),
+                              style: TextStyle(
+                                color: selected ? Colors.white : Colors.white.withOpacity(0.5),
+                                fontSize: 12,
+                                fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ],
               
-              // Done Button
+              const SizedBox(height: 20),
+              
+              // Minimal done button
               SizedBox(
                 width: double.infinity,
-                height: 52,
+                height: 44,
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.accentBlue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    elevation: 0,
                   ),
-                  child: const Text("Done", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: const Text("Done", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600)),
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper for minimal section
+  Widget _buildMinimalSection(String title, Widget content) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 0.5)),
+        const SizedBox(height: 8),
+        content,
+      ],
+    );
+  }
+
+  // Helper for minimal chip
+  Widget _buildMinimalChip(String label, bool selected, VoidCallback onTap) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            color: selected ? Colors.white.withOpacity(0.1) : Colors.white.withOpacity(0.03),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: selected ? Colors.white.withOpacity(0.3) : Colors.white.withOpacity(0.06)),
+          ),
+          child: Text(
+            label,
+            style: TextStyle(
+              color: selected ? Colors.white : Colors.white.withOpacity(0.6),
+              fontSize: 13,
+              fontWeight: selected ? FontWeight.w500 : FontWeight.w400,
+            ),
           ),
         ),
       ),
