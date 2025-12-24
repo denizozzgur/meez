@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+openai
+google-generativeai
+uuid
+pillow
+replicate
+fal-client
+requests
