@@ -911,64 +911,26 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
                       hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14, fontWeight: FontWeight.w400),
                       border: InputBorder.none,
                       icon: const Icon(Icons.auto_awesome, color: Colors.white),
+                      suffixIcon: GestureDetector(
+                        onTap: () => _openStyleSelector(context),
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 4),
+                          child: Icon(
+                            Icons.tune_rounded,
+                            color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
+                                ? AppColors.accentBlue
+                                : Colors.white.withOpacity(0.4),
+                            size: 22,
+                          ),
+                        ),
+                      ),
                       contentPadding: const EdgeInsets.symmetric(vertical: 14) 
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 16),
-
-              // Customize chips - horizontal minimal design
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Caption toggle
-                  GestureDetector(
-                    onTap: () => _openStyleSelector(context),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-                      decoration: BoxDecoration(
-                        color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
-                            ? AppColors.accentBlue.withOpacity(0.12)
-                            : Colors.white.withOpacity(0.06),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
-                              ? AppColors.accentBlue.withOpacity(0.3)
-                              : Colors.white.withOpacity(0.12),
-                          width: 1
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.palette_outlined, 
-                            size: 16, 
-                            color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
-                                ? AppColors.accentBlue
-                                : Colors.white.withOpacity(0.6)
-                          ),
-                          const SizedBox(width: 7),
-                          Text(
-                            _getStyleSummary(),
-                            style: TextStyle(
-                              color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
-                                  ? Colors.white.withOpacity(0.9)
-                                  : Colors.white.withOpacity(0.6),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
 
               // 3. Primary CTA
               Container(
