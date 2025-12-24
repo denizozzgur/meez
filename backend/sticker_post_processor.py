@@ -181,8 +181,9 @@ class StickerPostProcessor:
         else:
             y = (img_height - text_height) // 2
         
-        # Draw black outline manually (8 directions) for compatibility
-        outline_range = 3
+        # Draw black outline manually (8 directions) for VISIBLE white-on-black style
+        outline_range = 5  # Increased for more visible outline
+        print(f"📝 Adding caption '{caption}' with thick black outline (outline_range={outline_range})")
         for dx in range(-outline_range, outline_range + 1):
             for dy in range(-outline_range, outline_range + 1):
                 if dx != 0 or dy != 0:
