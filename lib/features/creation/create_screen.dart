@@ -907,10 +907,9 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                     cursorColor: AppColors.accentBlue,
                     decoration: InputDecoration(
-                      hintText: "Type anything... e.g. 'a tired cat'",
-                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14, fontWeight: FontWeight.w400),
+                      hintText: "Type anything",
+                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 16, fontWeight: FontWeight.w400),
                       border: InputBorder.none,
-                      icon: const Icon(Icons.auto_awesome, color: Colors.white),
                       suffixIcon: GestureDetector(
                         onTap: () => _openStyleSelector(context),
                         child: Container(
@@ -924,7 +923,7 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
                           ),
                         ),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 14) 
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 14) 
                     ),
                   ),
                 ),
