@@ -686,6 +686,12 @@ Background: Pure white or transparent. The image should ONLY contain the visual 
 
 {caption_guidance}
 
+🎲 RANDOMIZATION (CRITICAL):
+- DO NOT just pick the first examples - RANDOMLY pick from different categories
+- INVENT new captions inspired by the examples - don't just copy them
+- Each generation should feel UNIQUE and DIFFERENT from the last
+- Mix emotions: include one excited, one tired, one funny, one shocked, one casual
+
 🔥 CAPTION RULES (SUPER IMPORTANT):
 - MAXIMUM 3 WORDS
 - NO emojis in caption

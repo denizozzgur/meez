@@ -779,9 +779,11 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
     
     setState(() => _step = CreateStep.generating);
     try {
-        // Get user's preferred language for captions
-        final language = await LanguageService.getEffectiveLanguage();
-        print('🌍 Language being sent to API: "$language"');
+        // Get user's preferred language for captions - empty string if captions disabled
+        final language = _captionsEnabled 
+            ? await LanguageService.getEffectiveLanguage() 
+            : '';  // Empty = no caption
+        print('🌍 Language being sent to API: "$language" (captions enabled: $_captionsEnabled)');
         
         // Build params: mood,mood|style,style format
         String moodParam = _selectedMoods.isNotEmpty ? _selectedMoods.join(',') : 'random';
@@ -809,8 +811,10 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
     if (text.isEmpty) return;
     setState(() => _step = CreateStep.generating);
     try {
-        // Get user's preferred language for captions
-        final language = await LanguageService.getEffectiveLanguage();
+        // Get user's preferred language for captions - empty string if captions disabled
+        final language = _captionsEnabled 
+            ? await LanguageService.getEffectiveLanguage() 
+            : '';  // Empty = no caption
         
         // Build mood and style params (same as image generation)
         String moodParam = _selectedMoods.isNotEmpty ? _selectedMoods.join(',') : 'random';
