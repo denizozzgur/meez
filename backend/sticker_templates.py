@@ -791,10 +791,29 @@ CAPTION_TRANSLATIONS = {
     
     # Party / Celebrations
     "Let's go": {"tr": "Haydi", "es": "Vamos", "de": "Los geht's", "fr": "C'est parti"},
+    "Let's goooo": {"tr": "Haydiii", "es": "Vamooos", "de": "Los geht's!", "fr": "C'est partiii"},
     "Weekend vibes": {"tr": "Hafta sonu havası", "es": "Vibes de finde", "de": "Wochenend-Vibes", "fr": "Ambiance weekend"},
     "TGIF": {"tr": "Cuma geldi", "es": "Por fin viernes", "de": "Endlich Freitag", "fr": "Enfin vendredi"},
     "Party time": {"tr": "Parti zamanı", "es": "Hora de fiesta", "de": "Partyzeit", "fr": "C'est la fête"},
     "Cheers": {"tr": "Şerefe", "es": "Salud", "de": "Prost", "fr": "Santé"},
+    
+    # Pet / Dog Related
+    "Feeling ruff": {"tr": "Zor günler", "es": "Día de perros", "de": "Rauer Tag", "fr": "Journée rude"},
+    "Side-eye alert": {"tr": "Yan bakış", "es": "Mirada asesina", "de": "Seitenblick", "fr": "Regard suspect"},
+    "Pawsitively happy": {"tr": "Çok mutlu", "es": "Super feliz", "de": "Mega happy", "fr": "Trop content"},
+    "Zoomies incoming": {"tr": "Koşturma zamanı", "es": "A correr", "de": "Sausezeit", "fr": "Mode turbo"},
+    "Paw-some day": {"tr": "Harika gün", "es": "Día genial", "de": "Toller Tag", "fr": "Super journée"},
+    "Woof vibes": {"tr": "Hav havalar", "es": "Vibras perrunas", "de": "Wuff Stimmung", "fr": "Ambiance ouaf"},
+    "Sassy bark": {"tr": "Sert havlama", "es": "Ladrido sassy", "de": "Freches Bellen", "fr": "Aboiement sassy"},
+    "Good boy": {"tr": "Uslu çocuk", "es": "Buen chico", "de": "Braver Hund", "fr": "Bon chien"},
+    "Good girl": {"tr": "Uslu kız", "es": "Buena chica", "de": "Brave Hündin", "fr": "Bonne fille"},
+    "Treat time": {"tr": "Ödül zamanı", "es": "Hora del premio", "de": "Leckerli Zeit", "fr": "L'heure du gâteau"},
+    "Nap time": {"tr": "Uyku zamanı", "es": "Hora de siesta", "de": "Schlafenszeit", "fr": "Heure de la sieste"},
+    "Walk time": {"tr": "Yürüyüş zamanı", "es": "Hora del paseo", "de": "Gassi Zeit", "fr": "Heure de promenade"},
+    "Belly rubs": {"tr": "Göbek kaşıma", "es": "Caricias", "de": "Bauchkraulen", "fr": "Gratouilles"},
+    "Puppy eyes": {"tr": "Köpek bakışı", "es": "Ojos de cachorro", "de": "Hundeblick", "fr": "Yeux de chiot"},
+    "No thoughts": {"tr": "Hiç düşünce yok", "es": "Sin pensamientos", "de": "Keine Gedanken", "fr": "Aucune pensée"},
+    "Just vibin": {"tr": "Takılıyorum", "es": "Solo vibrando", "de": "Chillen", "fr": "Je profite"},
     
     # Generic / Misc
     "Yes": {"tr": "Evet", "es": "Sí", "de": "Ja", "fr": "Oui"},
@@ -807,6 +826,7 @@ CAPTION_TRANSLATIONS = {
     "Please": {"tr": "Lütfen", "es": "Por favor", "de": "Bitte", "fr": "S'il te plaît"},
     "Sorry": {"tr": "Özür dilerim", "es": "Perdón", "de": "Entschuldigung", "fr": "Désolé"},
     "Bye": {"tr": "Hoşçakal", "es": "Adiós", "de": "Tschüss", "fr": "Ciao"},
+    "Pls no": {"tr": "Lütfen hayır", "es": "Por favor no", "de": "Bitte nicht", "fr": "Pitié non"},
 }
 
 
