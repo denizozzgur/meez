@@ -917,35 +917,7 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
                 ),
               ),
 
-              const SizedBox(height: 12),
-
-              // Mood/Style selector chip - opens full page selector
-              GestureDetector(
-                onTap: () => _openStyleSelector(context),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.06),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white.withOpacity(0.1)),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.tune_rounded, size: 16, color: Colors.white.withOpacity(0.5)),
-                      const SizedBox(width: 8),
-                      Text(
-                        _getStyleSummary(),
-                        style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 13),
-                      ),
-                      const SizedBox(width: 4),
-                      Icon(Icons.chevron_right, size: 16, color: Colors.white.withOpacity(0.4)),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
 
               // 3. Primary CTA
               Container(
