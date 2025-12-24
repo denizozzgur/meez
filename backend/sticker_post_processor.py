@@ -19,8 +19,10 @@ class StickerPostProcessor:
         self.caption_font = None
         self.caption_font_size = 56
         
-        # Try common font paths
+        # Try common font paths - embedded font first!
+        script_dir = os.path.dirname(os.path.abspath(__file__))
         font_paths = [
+            os.path.join(script_dir, "Impact.ttf"),  # Embedded font (works on Railway!)
             "/System/Library/Fonts/Supplemental/Impact.ttf",  # macOS
             "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",  # Linux
             "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",  # Linux alt

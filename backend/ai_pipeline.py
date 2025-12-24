@@ -679,7 +679,8 @@ CRITICAL RULES:
 
 VISUAL STYLE:
 {style_desc}
-White/transparent background, no text overlays on image.
+⚠️ CRITICAL: Image must have NO TEXT, NO LETTERS, NO WORDS, NO CAPTIONS embedded in the image itself!
+Background: Pure white or transparent. The image should ONLY contain the visual character/mascot - text will be added separately later.
 
 {mood_guidance}
 
