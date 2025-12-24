@@ -498,6 +498,33 @@ class AIProcessor:
         return "data:image/png;base64,"
 
 
+    def _generate_caption_first_pack(self, fixed_caption, tone, language, client):
+        """
+        Caption-First Flow: User provides caption, we generate varied visuals
+        Example: "Yok artık" → 6 different visuals (cat, dog, emoji, etc) with SAME caption
+        """
+        from datetime import datetime
+        
+        print(f"🎨 Caption-First Mode: '{fixed_caption}' + varied visuals")
+        
+        # Subjects to use for varied visuals
+        visual_subjects = ["cat", "dog", "cute character", "emoji-style face", "abstract shape", "cartoon object"]
+        
+        # Build simple prompts with fixed caption
+        prompts_list = []
+        for i, subject in enumerate(visual_subjects, 1):
+            prompts_list.append({
+                "id": i,
+                "caption": fixed_caption,  # User's caption stays fixed
+                "prompt": f"Cute {subject}, expressive emotion matching the vibe of '{fixed_caption}', isolated on pure white background, sticker style, no text"
+            })
+        
+        return {
+            "subject": fixed_caption,
+            "prompts": prompts_list
+        }
+
+
     def generate_text_sticker_prompts(self, user_input, tone="random", language="en"):
         from openai import OpenAI
         from datetime import datetime
@@ -505,10 +532,16 @@ class AIProcessor:
         
         client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         
-        # 🎯 Detect user intent (for future enhancement - not affecting current flow)
+        # 🎯 Detect user intent and route accordingly
         detector = IntentDetector()
         intent = detector.detect_intent(user_input, language)
-        # Intent detection ready - will use this for caption-first/emoji flows later
+        
+        # Route based on intent
+        if intent == "caption_first":
+            # User wants THIS caption on multiple visuals
+            return self._generate_caption_first_pack(user_input, tone, language, client)
+        
+        # Default: subject-based (existing flow continues below)
         
         # Language-specific caption examples - MASSIVE variety for randomization
         language_caption_guidance = {
