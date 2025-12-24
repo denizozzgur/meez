@@ -503,32 +503,97 @@ class AIProcessor:
         from datetime import datetime
         client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         
-        # Language-specific caption examples - GENUINE everyday WhatsApp expressions
+        # Language-specific caption examples - MASSIVE variety for randomization
         language_caption_guidance = {
             "tr": """
 CAPTION LANGUAGE: TURKISH (Türkçe)
-Generate captions like a Turkish person would ACTUALLY type on WhatsApp!
-GENUINE Turkish WhatsApp phrases: "Yok ya", "Off ya", "Ayyy", "Ben ölüyorum", "Çok iyii", "Yaa niye", "Tamam tamam", "Şaka mı bu", "İnanamıyorum", "Dur bi", "Aa çok tatlı", "Yeter artık", "Oldu mu şimdi", "Hadi ya", "Koptum", "Bitane daha", "Yemezler", "Ne alaka", "Sus", "Çok fena", "Ama nasıl", "Bir dakika", "E tabii", "Vallaa", "Yo", "Hee"
+Generate captions like a Turkish person would ACTUALLY type on WhatsApp! Pick from these styles but BE CREATIVE:
+
+EXCITED/HAPPY: "Çok iyii", "Olley", "Haydiii", "Yessss", "Sonunda", "Aşırı mutlu", "Bu çok iyi", "Bayıldım", "Müthiş", "Evet evet", "Hadi bakalım", "Yaşasın", "Süperr", "Mükemmel", "Tam istediğim"
+
+TIRED/DONE: "Yapamam", "Bittim", "Off ya", "Yeter artık", "Yoruldum", "Pes", "Dayanamıyorum", "Bitirdim", "Öldüm", "Yandım", "Mahvoldum", "Tükendim", "Halsizim", "Uykum var", "Son"
+
+SHOCKED/SURPRISED: "Yok ya", "Şaka mı bu", "İnanamıyorum", "Nasıl ya", "Olamaz", "Ne", "Hah", "Vay be", "Şok", "Aaa", "Oha", "Harbiden mi", "Cidden mi", "Yok artık", "Olur mu"
+
+ANNOYED/MEH: "Yaa niye", "Ne alaka", "Sus", "Tamam tamam", "Anladık", "Bıktım", "Dur bi", "Hadi ya", "Sinir", "Saçmalık", "Olmaz", "Yok öyle", "Yeter", "Geç", "Boşver"
+
+LAUGHING/FUN: "Koptum", "Ben ölüyorum", "Çok komik", "Yaa", "Hahaha", "Gülmekten öldüm", "Çıldırıcam", "Delirdim", "Bu ne ya", "Kafayı yedim", "Aşırı iyi", "Efsane", "Patlıyorum"
+
+CUTE/SOFT: "Aa çok tatlı", "Tatlılık", "Çok şeker", "Aww", "Ne kadar tatlı", "Minik", "Ponçik", "Şirinlik", "Aşkım", "Canım", "Bebişim", "Muah", "Öpüyorum"
+
+RANDOM/CASUAL: "Vallaa", "E tabii", "Hee", "Yo", "Hmm", "Bilmem", "Bakıcaz", "Görürsün", "Kim bilir", "Olabilir", "Belki", "Bakalım", "Artık", "Olsun", "Neyse"
 """,
             "es": """
 CAPTION LANGUAGE: SPANISH (Español)  
-Generate captions like a Spanish person would ACTUALLY type on WhatsApp!
-GENUINE Spanish WhatsApp phrases: "Ay no", "Jajaja qué", "Me muero", "Qué dices", "Pero cómo", "Es broma", "No me lo creo", "Eso me pasa", "Qué fuertee", "Buenoo", "Ostras tío", "No puedo", "Madre mía", "Anda ya", "Para ya", "Qué mono", "Me encanta", "Fatal", "Nada nada", "Vale vale"
+Generate captions like a Spanish person would ACTUALLY type on WhatsApp! Pick from these styles but BE CREATIVE:
+
+EXCITED/HAPPY: "Vamoos", "Qué guay", "Me encanta", "Genial", "Perfecto", "Brutal", "Qué bien", "Increíble", "Estoy flipando", "Qué mono", "Lo amo", "Es lo mejor", "Síiii", "Ole", "Viva"
+
+TIRED/DONE: "No puedo", "Estoy muerto", "Qué pereza", "Fatal", "Agotado", "Ya no más", "Me rindo", "Qué rollo", "Paso", "Buf", "Uf", "Me muero", "Acabado", "Destruido"
+
+SHOCKED/SURPRISED: "Madre mía", "Qué fuertee", "No me lo creo", "Pero qué", "Pero cómo", "Anda ya", "Ostras", "Dios mío", "Flipando", "Cómo", "Imposible", "En serio", "De verdad"
+
+ANNOYED/MEH: "Ay no", "Qué dices", "Para ya", "Déjame", "Basta", "Qué pesado", "Ya vale", "Nada nada", "Vale vale", "Que sí", "Que no", "Me da igual", "Paso de todo"
+
+LAUGHING/FUN: "Jajaja qué", "Me muero de risa", "No puedo más", "Estoy llorando", "Qué risa", "Es broma", "Buenísimo", "Qué bueno", "Me parto", "Morido", "Jaja tío"
+
+CUTE/SOFT: "Qué mono", "Ay qué lindo", "Precioso", "Hermoso", "Cielo", "Cariño", "Mi amor", "Tesoro", "Guapísimo", "Adorable", "Qué cosa"
+
+RANDOM/CASUAL: "Buenoo", "Pues nada", "A ver", "Ya veremos", "Quién sabe", "Puede ser", "Tal vez", "Vamos a ver", "Oye", "Mira", "Eso"
 """,
             "de": """
 CAPTION LANGUAGE: GERMAN (Deutsch)
-Generate captions like a German person would ACTUALLY type on WhatsApp!
-GENUINE German WhatsApp phrases: "Nee oder", "Haha was", "Echt jetzt", "Oh nein", "Ja mann", "Krass ey", "Wie süß", "Alter nein", "Digga was", "Ich kann nicht", "So true", "Muss los", "Warte kurz", "Läuft", "Klar", "Keine Ahnung", "Na toll", "Okaay", "Mhmm", "Joa"
+Generate captions like a German person would ACTUALLY type on WhatsApp! Pick from these styles but BE CREATIVE:
+
+EXCITED/HAPPY: "Los gehts", "Mega", "Hammer", "Geil", "Super", "Perfekt", "Endlich", "Jaaaa", "Toll", "Wunderbar", "Jawoll", "Stark", "Spitze", "Klasse", "Genial"
+
+TIRED/DONE: "Kein Bock", "Ich kann nicht", "Fertig", "Ich sterbe", "Platt", "Tot", "Erschöpft", "Keine Kraft", "Am Ende", "Kaputt", "Müde", "Nope", "Ne", "Vergiss es"
+
+SHOCKED/SURPRISED: "Echt jetzt", "Nee oder", "Was", "Wie bitte", "Ohh", "Krass", "Heftig", "Alter", "Digga was", "Oh nein", "Unmöglich", "Ernsthaft", "Hä", "Wow"
+
+ANNOYED/MEH: "Digga", "Lass mal", "Nervt", "Jaja", "Na toll", "Wie auch immer", "Egal", "Keine Ahnung", "Mir egal", "Meh", "Naja", "Pff", "Tja", "Och nö"
+
+LAUGHING/FUN: "Haha was", "Ich lach mich tot", "Zu gut", "Haha wie geil", "Lol", "Rofl", "So witzig", "Ich kann nicht mehr", "Hahaha", "Göttlich", "Hammer witzig"
+
+CUTE/SOFT: "Wie süß", "Aww", "So niedlich", "Süßi", "Schnucki", "Herzchen", "Schatz", "Cutie", "So cute", "Knuffig", "Zuckersüß", "Maus"
+
+RANDOM/CASUAL: "Läuft", "Klar", "Okaay", "Mal sehen", "Wer weiß", "Vielleicht", "Mhmm", "Joa", "Geht klar", "Passt", "Check", "Safe", "Easy"
 """,
             "fr": """
 CAPTION LANGUAGE: FRENCH (Français)
-Generate captions like a French person would ACTUALLY type on WhatsApp!
-GENUINE French WhatsApp phrases: "Mdrrr quoi", "Mais non", "Trop mignon", "Jsuis mort", "C'est ouf", "Attends quoi", "Ah non", "Genre", "Grave", "Trop bien", "Sah quel", "J'avoue", "Mais pourquoi", "Oklm", "Tranquille", "La flemme", "Chelou", "C'est çaaa", "Pas mal", "Wsh"
+Generate captions like a French person would ACTUALLY type on WhatsApp! Pick from these styles but BE CREATIVE:
+
+EXCITED/HAPPY: "C'est parti", "Trop bien", "Génial", "Parfait", "Incroyable", "Ouiii", "Enfin", "Super", "Magnifique", "J'adore", "Excellent", "Dinguerie", "Trop cool", "Chanmé"
+
+TIRED/DONE: "La flemme", "Je peux plus", "Jsuis mort", "Épuisé", "Claqué", "Dead", "Fini", "HS", "KO", "Plus la force", "J'abandonne", "Rip moi", "C'est fini", "Non non"
+
+SHOCKED/SURPRISED: "C'est ouf", "Quoi", "Mais non", "Attends quoi", "Comment", "Impossible", "Sérieux", "Oh non", "Je rêve", "Choqué", "Grave", "Ptdr quoi", "Wsh"
+
+ANNOYED/MEH: "Relou", "Chelou", "Mais pourquoi", "Ah non", "Stop", "Laisse", "Osef", "Jpeux pas", "Ras le bol", "C'est bon", "Voilà voilà", "Bref", "Soit"
+
+LAUGHING/FUN: "Mdrrr quoi", "Jsuis mort", "Trop drôle", "Hahaha", "Ptdr", "Jpleure", "Je respire plus", "Jpp", "Ahahah", "Explosé", "Plié", "C'est trop ça"
+
+CUTE/SOFT: "Trop mignon", "Aww", "Trop chou", "Adorable", "Mon coeur", "Mon amour", "Bisous", "Câlin", "Trop beau", "Joli", "Magnifique"
+
+RANDOM/CASUAL: "Oklm", "Tranquille", "Carré", "J'avoue", "Sah quel", "Genre", "C'est çaaa", "Pas mal", "On verra", "Peut-être", "Bah", "Mouais", "Bon"
 """,
             "en": """
 CAPTION LANGUAGE: ENGLISH
-Generate captions like someone would ACTUALLY type on WhatsApp!
-GENUINE English WhatsApp phrases: "Lmaoo what", "I can't", "So me", "Wait no", "Stoppp", "Help", "This is me", "Same tbh", "Literally me", "Not me doing this", "The accuracy", "Why tho", "Send help", "Mood", "Facts", "No way", "Crying rn", "Pls", "Bruh", "Okay but"
+Generate captions like someone would ACTUALLY type on WhatsApp! Pick from these styles but BE CREATIVE:
+
+EXCITED/HAPPY: "Let's goooo", "Yesss", "Finally", "Love this", "So good", "Perfect", "Amazing", "Best thing ever", "Obsessed", "Living for this", "This is it", "Yay", "Woohoo"
+
+TIRED/DONE: "I can't", "I'm dead", "Help", "Done", "Over it", "So tired", "Nope", "Not today", "Exhausted", "RIP me", "Send help", "Too much", "I give up"
+
+SHOCKED/SURPRISED: "Wait what", "No way", "Excuse me", "How", "What", "OMG", "Shook", "I'm screaming", "Shocked", "What just happened", "Hold up", "Huh", "Literally what"
+
+ANNOYED/MEH: "Why tho", "Pls no", "Stoppp", "I'm out", "Not this", "Ugh", "Here we go", "Oh great", "Whatever", "Sure Jan", "Okay then", "Meh", "Gross"
+
+LAUGHING/FUN: "Lmaoo what", "I'm crying", "So funny", "Hahaha", "Dead", "Screaming", "Howling", "This is gold", "I can't breathe", "Too funny", "Iconic", "Legendary"
+
+CUTE/SOFT: "So cute", "Aww", "Adorable", "Precious", "My heart", "Love you", "Cutest thing", "Too pure", "Angel", "Sweetie", "Baby", "So soft"
+
+RANDOM/CASUAL: "Same tbh", "Mood", "Facts", "Literally me", "So me", "This is me", "Relatable", "Okay but", "Honestly", "Lowkey", "Highkey", "No but like", "The accuracy"
 """
         }
         
