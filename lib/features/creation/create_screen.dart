@@ -724,8 +724,6 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
         }
 
         if (mounted) {
-            setState(() => _step = CreateStep.textInput); // Reset for next time
-
             final status = await _api.checkJobStatus(jobId);
             print("DEBUG STATUS: $status");
             if (status['result'] != null) {
@@ -756,11 +754,16 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
                 await StorageService().savePack(newPack);
                 MockData.addPack(newPack);
 
+                // Navigate to results, THEN reset state (prevents flash)
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (_) => GenerationResultsScreen(pack: newPack)
-                ));
+                )).then((_) {
+                  // Reset state after returning from results screen
+                  if (mounted) setState(() => _step = CreateStep.textInput);
+                });
             } else {
                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No result received.")));
+               if (mounted) setState(() => _step = CreateStep.textInput);
             }
         }
   }
