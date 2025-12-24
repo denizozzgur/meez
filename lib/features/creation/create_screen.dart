@@ -343,6 +343,62 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
                 }).toList(),
               ),
               
+              const SizedBox(height: 24),
+              
+              // Caption section with toggle
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Captions", style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 13, fontWeight: FontWeight.w500)),
+                  Switch.adaptive(
+                    value: _captionsEnabled,
+                    activeColor: AppColors.accentBlue,
+                    onChanged: (value) async {
+                      setState(() => _captionsEnabled = value);
+                      setSheetState(() {});
+                      await LanguageService.setCaptionsEnabled(value);
+                    },
+                  ),
+                ],
+              ),
+              
+              // Language selector (only visible when captions enabled)
+              AnimatedCrossFade(
+                firstChild: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: LanguageService.supportedLanguages.map((langCode) {
+                        final isSelected = _selectedLanguage == langCode;
+                        final langName = LanguageService.getLanguageName(langCode);
+                        return GestureDetector(
+                          onTap: () async {
+                            setState(() => _selectedLanguage = langCode);
+                            setSheetState(() {});
+                            await LanguageService.setPreferredLanguage(langCode);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                            decoration: BoxDecoration(
+                              color: isSelected ? AppColors.accentBlue.withOpacity(0.15) : Colors.white.withOpacity(0.06),
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(color: isSelected ? AppColors.accentBlue.withOpacity(0.5) : Colors.white.withOpacity(0.1)),
+                            ),
+                            child: Text(langName, style: TextStyle(color: isSelected ? Colors.white : Colors.white.withOpacity(0.7), fontSize: 14, fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500)),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+                secondChild: const SizedBox.shrink(),
+                crossFadeState: _captionsEnabled ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 200),
+              ),
+              
               const SizedBox(height: 32),
               
               // Done Button
