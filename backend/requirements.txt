@@ -9,3 +9,5 @@ pillow
 replicate
 fal-client
 requests
+sqlalchemy
+psycopg2-binary

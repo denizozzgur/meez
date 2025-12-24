@@ -8,8 +8,10 @@ import random
 import hashlib
 import os
 import json
+from datetime import datetime, timedelta
 from ai_pipeline import process_generation_task, AIProcessor
 from legal_pages import router as legal_router
+from database import init_db, get_db, StickerPack
 
 # Reddit-style fun username generator
 ADJECTIVES = [
@@ -53,8 +55,14 @@ app = FastAPI()
 # Include legal pages router
 app.include_router(legal_router)
 
-# In-memory storage for demo purposes
+# In-memory storage for job progress (jobs are ephemeral)
 jobs = {}
+
+# Initialize database on startup
+@app.on_event("startup")
+def startup_event():
+    init_db()
+    initialize_seed_data_to_db()
 
 class GenerationRequest(BaseModel):
     user_id: str
@@ -229,128 +237,124 @@ SEED_PACKS = [
     },
 ]
 
-def initialize_seed_data():
-    """Load seed packs into community feed on startup.
-    Tries to load from generated JSON first, falls back to placeholders.
-    """
-    global community_feed
-    
-    # Try loading from generated JSON file
-    json_path = os.path.join(os.path.dirname(__file__), "seed_stickers.json")
-    packs_to_load = None
-    
-    if os.path.exists(json_path):
-        try:
-            with open(json_path, 'r') as f:
-                packs_to_load = json.load(f)
-            print(f"✅ Loading {len(packs_to_load)} seed packs from seed_stickers.json")
-        except Exception as e:
-            print(f"⚠ Failed to load seed_stickers.json: {e}")
-            packs_to_load = SEED_PACKS
-    else:
-        print("ℹ seed_stickers.json not found, using placeholder stickers")
-        print("💡 Run 'python generate_seed_stickers.py' to generate real stickers")
-        packs_to_load = SEED_PACKS
-    
-    from datetime import datetime, timedelta
-    
-    for i, pack in enumerate(packs_to_load):
-        # Seed packs get progressively older timestamps (so user packs appear on top)
-        seed_time = datetime.now() - timedelta(days=i+1, hours=random.randint(0,12))
+def initialize_seed_data_to_db():
+    """Load seed packs into database on startup (only if not already loaded)."""
+    with get_db() as db:
+        # Check if seed data already exists
+        existing = db.query(StickerPack).filter(StickerPack.is_seed == True).first()
+        if existing:
+            print("✅ Seed data already in database, skipping initialization")
+            return
         
-        seed_pack = {
-            "id": pack["id"],
-            "title": pack["title"],
-            "author": generate_fun_nickname(pack.get("user_id", pack["id"])),
-            "stickers": pack["stickers"],
-            "downloads": random.randint(100, 500),
-            "likes": pack.get("likes", random.randint(1000, 6000)),
-            "createdAt": random.choice(["2h ago", "5h ago", "1d ago", "2d ago", "3d ago"]),
-            "created_at": seed_time.isoformat(),  # Sortable timestamp
-            "category": "Community",
-            "tags": [],
-            "isPublic": True
-        }
-        community_feed.append(seed_pack)
-    print(f"✅ Loaded {len(packs_to_load)} seed packs for production launch")
-
-# Initialize seed data on module load
-initialize_seed_data()
+        # Try loading from generated JSON file
+        json_path = os.path.join(os.path.dirname(__file__), "seed_stickers.json")
+        packs_to_load = None
+        
+        if os.path.exists(json_path):
+            try:
+                with open(json_path, 'r') as f:
+                    packs_to_load = json.load(f)
+                print(f"✅ Loading {len(packs_to_load)} seed packs from seed_stickers.json")
+            except Exception as e:
+                print(f"⚠ Failed to load seed_stickers.json: {e}")
+                packs_to_load = SEED_PACKS
+        else:
+            print("ℹ seed_stickers.json not found, using placeholder stickers")
+            packs_to_load = SEED_PACKS
+        
+        for i, pack in enumerate(packs_to_load):
+            seed_time = datetime.utcnow() - timedelta(days=i+1, hours=random.randint(0,12))
+            
+            db_pack = StickerPack(
+                id=pack["id"],
+                title=pack["title"],
+                author=generate_fun_nickname(pack.get("user_id", pack["id"])),
+                user_id=pack.get("user_id", pack["id"]),
+                stickers=pack["stickers"],
+                likes=pack.get("likes", random.randint(1000, 6000)),
+                downloads=random.randint(100, 500),
+                liked_by=[],
+                is_public=True,
+                is_seed=True,
+                created_at=seed_time
+            )
+            db.add(db_pack)
+        
+        db.commit()
+        print(f"✅ Loaded {len(packs_to_load)} seed packs to database")
 
 
 def add_to_feed(pack_data, user_id="anon"):
-    """Validates and adds a generated pack to the global feed"""
-    from datetime import datetime
+    """Validates and adds a generated pack to the database"""
     try:
-        # Generate a fun nickname for this user
         author_name = generate_fun_nickname(user_id)
         
-        # Enrich with metadata needed for the feed
-        new_pack = {
-            "id": pack_data.get("id"),
-            "title": pack_data.get("title", "Untitled Pack"),
-            "author": author_name,
-            "stickers": pack_data.get("stickers", []),
-            "downloads": 0,
-            "likes": 0,
-            "createdAt": "Just now",
-            "created_at": datetime.now().isoformat(),  # Sortable timestamp
-            "category": "Community",
-            "tags": [],
-            "isPublic": True
-        }
-        # Prepend to show newest first
-        community_feed.insert(0, new_pack)
-        # Keep list size manageable
-        if len(community_feed) > 50:
-            community_feed.pop()
+        with get_db() as db:
+            db_pack = StickerPack(
+                id=pack_data.get("id"),
+                title=pack_data.get("title", "Untitled Pack"),
+                author=author_name,
+                user_id=user_id,
+                stickers=pack_data.get("stickers", []),
+                likes=0,
+                downloads=0,
+                liked_by=[],
+                is_public=True,
+                is_seed=False,
+                created_at=datetime.utcnow()
+            )
+            db.add(db_pack)
+            db.commit()
+            print(f"FEED DEBUG: Added pack {pack_data.get('id')} to database")
     except Exception as e:
         print(f"Error adding to feed: {e}")
 
-    print(f"FEED DEBUG: Added pack {pack_data.get('id')}. Total count: {len(community_feed)}")
-
 @app.get("/api/v1/community/feed")
 def get_community_feed():
-    # Sort by created_at descending (newest first)
-    sorted_feed = sorted(community_feed, key=lambda x: x.get('created_at', ''), reverse=True)
-    return sorted_feed
+    """Get all packs from database, sorted by newest first"""
+    with get_db() as db:
+        packs = db.query(StickerPack).filter(
+            StickerPack.is_public == True
+        ).order_by(StickerPack.created_at.desc()).limit(100).all()
+        return [pack.to_dict() for pack in packs]
 
 @app.post("/api/v1/community/like/{pack_id}")
 def toggle_like(pack_id: str, user_id: str = "anon"):
     """Reddit-style toggle: like if not liked, unlike if already liked"""
-    for pack in community_feed:
-        if pack["id"] == pack_id:
-            # Track who liked this pack
-            if "liked_by" not in pack:
-                pack["liked_by"] = set()
-            
-            if user_id in pack["liked_by"]:
-                # Unlike: remove from set and decrement
-                pack["liked_by"].remove(user_id)
-                pack["likes"] = max(0, pack["likes"] - 1)
-                return {"likes": pack["likes"], "liked": False}
-            else:
-                # Like: add to set and increment
-                pack["liked_by"].add(user_id)
-                pack["likes"] += 1
-                return {"likes": pack["likes"], "liked": True}
-    return {"likes": 0, "liked": False}
+    with get_db() as db:
+        pack = db.query(StickerPack).filter(StickerPack.id == pack_id).first()
+        if not pack:
+            return {"likes": 0, "liked": False}
+        
+        liked_by = pack.liked_by or []
+        
+        if user_id in liked_by:
+            # Unlike
+            liked_by.remove(user_id)
+            pack.likes = max(0, pack.likes - 1)
+            pack.liked_by = liked_by
+            db.commit()
+            return {"likes": pack.likes, "liked": False}
+        else:
+            # Like
+            liked_by.append(user_id)
+            pack.likes += 1
+            pack.liked_by = liked_by
+            db.commit()
+            return {"likes": pack.likes, "liked": True}
 
 @app.delete("/api/v1/community/pack/{pack_id}")
 def delete_pack_from_feed(pack_id: str):
-    """
-    Removes a pack from the community feed.
-    In a real app, verify ownership (user_id) here.
-    """
-    global community_feed
-    initial_len = len(community_feed)
-    community_feed = [p for p in community_feed if p["id"] != pack_id]
-    
-    if len(community_feed) < initial_len:
-        print(f"Deleted pack {pack_id} from feed.")
-        return {"status": "deleted"}
-    else:
-        return {"status": "not_found"}
+    """Removes a pack from the database."""
+    with get_db() as db:
+        pack = db.query(StickerPack).filter(StickerPack.id == pack_id).first()
+        if pack:
+            db.delete(pack)
+            db.commit()
+            print(f"Deleted pack {pack_id} from database.")
+            return {"status": "deleted"}
+        else:
+            return {"status": "not_found"}
 
 # Update Job Processors to Add to Feed
 async def run_text_generation_job(job_id: str, user_input: str, tone: str = "random", style: str = "random"):
