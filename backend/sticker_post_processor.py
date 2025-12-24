@@ -156,13 +156,17 @@ class StickerPostProcessor:
     
     def add_caption_text(self, img, text, position='bottom'):
         """
-        Overlay caption text with stroke/outline for readability.
-        Styled for viral WhatsApp sticker aesthetic.
+        Overlay caption text with white fill and black outline.
+        Uses manual outline drawing for maximum font compatibility.
         """
+        if not text or not text.strip():
+            return img  # Skip if empty text
+            
         draw = ImageDraw.Draw(img)
+        caption = text.upper()
         
         # Get text bounding box
-        bbox = draw.textbbox((0, 0), text.upper(), font=self.caption_font)
+        bbox = draw.textbbox((0, 0), caption, font=self.caption_font)
         text_width = bbox[2] - bbox[0]
         text_height = bbox[3] - bbox[1]
         
@@ -171,24 +175,21 @@ class StickerPostProcessor:
         x = (img_width - text_width) // 2
         
         if position == 'bottom':
-            y = img_height - text_height - 30  # 30px padding from bottom
+            y = img_height - text_height - 25  # Padding from bottom
         elif position == 'top':
-            y = 20  # 20px padding from top
+            y = 20
         else:
             y = (img_height - text_height) // 2
         
-        # Draw text with thick black stroke for readability
-        stroke_width = 4
+        # Draw black outline manually (8 directions) for compatibility
+        outline_range = 3
+        for dx in range(-outline_range, outline_range + 1):
+            for dy in range(-outline_range, outline_range + 1):
+                if dx != 0 or dy != 0:
+                    draw.text((x + dx, y + dy), caption, font=self.caption_font, fill=(0, 0, 0, 255))
         
-        # Draw the text with stroke
-        draw.text(
-            (x, y), 
-            text.upper(), 
-            font=self.caption_font, 
-            fill=(255, 255, 255, 255),  # White text
-            stroke_width=stroke_width,
-            stroke_fill=(0, 0, 0, 255)  # Black stroke
-        )
+        # Draw white text on top
+        draw.text((x, y), caption, font=self.caption_font, fill=(255, 255, 255, 255))
         
         return img
     
