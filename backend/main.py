@@ -85,8 +85,9 @@ async def generate_pack(
     user_id: str = Form(...),
     humor_tone: str = Form(...),
     style: str = Form("random"),
-    language: str = Form("en")
+    language: str = Form("")  # Empty = no caption
 ):
+    print(f"📦 Received generate/pack - language='{language}' (empty means no caption)")
     job_id = str(uuid.uuid4())
     
     # Read image bytes (mock processing)
@@ -106,8 +107,9 @@ async def generate_text_pack(
     user_input: str = Form(...),
     humor_tone: str = Form("random"),
     style: str = Form("random"),
-    language: str = Form("en")
+    language: str = Form("")  # Empty = no caption
 ):
+    print(f"📝 Received generate/text - language='{language}' (empty means no caption)")
     job_id = str(uuid.uuid4())
     jobs[job_id] = {"status": "processing", "progress": 0}
     background_tasks.add_task(run_text_generation_job, job_id, user_input, humor_tone, style, language)
