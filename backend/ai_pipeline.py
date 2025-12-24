@@ -501,7 +501,14 @@ class AIProcessor:
     def generate_text_sticker_prompts(self, user_input, tone="random", language="en"):
         from openai import OpenAI
         from datetime import datetime
+        from intent_detector import IntentDetector
+        
         client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        
+        # 🎯 Detect user intent (for future enhancement - not affecting current flow)
+        detector = IntentDetector()
+        intent = detector.detect_intent(user_input, language)
+        # Intent detection ready - will use this for caption-first/emoji flows later
         
         # Language-specific caption examples - MASSIVE variety for randomization
         language_caption_guidance = {

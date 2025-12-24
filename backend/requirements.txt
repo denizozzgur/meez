@@ -11,3 +11,4 @@ fal-client
 requests
 sqlalchemy
 psycopg2-binary
+emoji==2.15.0
