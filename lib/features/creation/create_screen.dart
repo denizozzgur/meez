@@ -6,6 +6,7 @@ import 'dart:async';
 import '../../core/theme/app_theme.dart';
 import '../../core/api/api_client.dart';
 import '../../core/services/subscription_service.dart';
+import '../../core/services/language_service.dart';
 import '../../shared/widgets/premium_glass_card.dart';
 import '../../shared/widgets/branded_background.dart';
 import '../library/packs_screen.dart';
@@ -665,10 +666,18 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
     
     setState(() => _step = CreateStep.generating);
     try {
+        // Get user's preferred language for captions
+        final language = await LanguageService.getEffectiveLanguage();
+        
         // Build params: mood,mood|style,style format
         String moodParam = _selectedMoods.isNotEmpty ? _selectedMoods.join(',') : 'random';
         String styleParam = _selectedStyles.isNotEmpty ? _selectedStyles.join(',') : 'random';
-        final jobId = await _api.submitGenerationJob(_selectedImage!, MockData.currentUser.id, '$moodParam|$styleParam');
+        final jobId = await _api.submitGenerationJob(
+          _selectedImage!, 
+          MockData.currentUser.id, 
+          '$moodParam|$styleParam',
+          language: language,
+        );
         await _pollAndNavigate(jobId);
         
         // Increment generation count after successful generation
@@ -686,6 +695,9 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
     if (text.isEmpty) return;
     setState(() => _step = CreateStep.generating);
     try {
+        // Get user's preferred language for captions
+        final language = await LanguageService.getEffectiveLanguage();
+        
         // Build mood and style params (same as image generation)
         String moodParam = _selectedMoods.isNotEmpty ? _selectedMoods.join(',') : 'random';
         String styleParam = _selectedStyles.isNotEmpty ? _selectedStyles.join(',') : 'random';
@@ -693,7 +705,8 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
         final jobId = await _api.submitTextGenerationJob(
           text, 
           tone: moodParam, 
-          style: styleParam
+          style: styleParam,
+          language: language,
         );
         await _pollAndNavigate(jobId);
         

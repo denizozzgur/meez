@@ -39,11 +39,12 @@ class ApiClient {
     }
   }
 
-  Future<String> submitGenerationJob(File imageFile, String userId, String tone, {String style = "random"}) async {
+  Future<String> submitGenerationJob(File imageFile, String userId, String tone, {String style = "random", String language = "en"}) async {
     var request = http.MultipartRequest('POST', Uri.parse(ApiConstants.generatePack));
     request.fields['user_id'] = userId;
     request.fields['humor_tone'] = tone;
     request.fields['style'] = style;
+    request.fields['language'] = language;
     
     request.files.add(await http.MultipartFile.fromPath('image', imageFile.path));
 
@@ -64,7 +65,7 @@ class ApiClient {
     }
   }
 
-  Future<String> submitTextGenerationJob(String userInput, {String tone = "random", String style = "random"}) async {
+  Future<String> submitTextGenerationJob(String userInput, {String tone = "random", String style = "random", String language = "en"}) async {
     try {
       final response = await http.post(
         Uri.parse(ApiConstants.generateText),
@@ -72,6 +73,7 @@ class ApiClient {
           'user_input': userInput,
           'humor_tone': tone,
           'style': style,
+          'language': language,
         },
       );
       
