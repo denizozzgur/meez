@@ -7,9 +7,8 @@ class ApiConstants {
     // Production Railway URL
     const String productionUrl = 'https://meez-production.up.railway.app/api/v1';
     
-    // For local development, uncomment below and comment production:
-    // const String lanIP = '192.168.1.187';
-    // return 'http://$lanIP:8000/api/v1';
+    // For local development:
+    // return 'http://localhost:8000/api/v1';
     
     return productionUrl;
   }

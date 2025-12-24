@@ -778,6 +778,7 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
     try {
         // Get user's preferred language for captions
         final language = await LanguageService.getEffectiveLanguage();
+        print('🌍 Language being sent to API: "$language"');
         
         // Build params: mood,mood|style,style format
         String moodParam = _selectedMoods.isNotEmpty ? _selectedMoods.join(',') : 'random';
