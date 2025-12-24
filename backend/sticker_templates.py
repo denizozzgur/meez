@@ -728,3 +728,114 @@ MASTER_STICKER_LIBRARY = [
         "tags": ["sad", "meme", "ok"]
     }
 ]
+
+# =============================================================================
+# MULTI-LANGUAGE CAPTION TRANSLATIONS
+# Native slang translations for common sticker captions
+# Supported: tr (Turkish), es (Spanish), de (German), fr (French)
+# =============================================================================
+
+CAPTION_TRANSLATIONS = {
+    # Reactions / Emotions
+    "I'm dead": {"tr": "Öldüm", "es": "Estoy muerto", "de": "Ich bin tot", "fr": "Je suis mort"},
+    "Wait what?": {"tr": "Nasıl yani?", "es": "¿Qué?", "de": "Warte was?", "fr": "Quoi?"},
+    "Be serious": {"tr": "Ciddi ol", "es": "En serio", "de": "Sei ernst", "fr": "Sois sérieux"},
+    "Told you": {"tr": "Demiştim", "es": "Te lo dije", "de": "Hab's gesagt", "fr": "Je t'avais dit"},
+    "I can't": {"tr": "Yapamam", "es": "No puedo", "de": "Ich kann nicht", "fr": "Je peux pas"},
+    "Of course": {"tr": "Tabii ki", "es": "Por supuesto", "de": "Natürlich", "fr": "Bien sûr"},
+    "Slay": {"tr": "Efsane", "es": "Arrasar", "de": "Hammer", "fr": "Trop bien"},
+    "Bet": {"tr": "Tamam", "es": "Dale", "de": "Abgemacht", "fr": "Banco"},
+    "Cap": {"tr": "Yalan", "es": "Mentira", "de": "Lüge", "fr": "Mytho"},
+    "No cap": {"tr": "Vallahi", "es": "En serio", "de": "Echt jetzt", "fr": "Vraiment"},
+    "Side eye": {"tr": "Yan bakış", "es": "Mirando", "de": "Seitenblick", "fr": "Regard"},
+    "LOL": {"tr": "AHAHA", "es": "JAJA", "de": "LOL", "fr": "MDR"},
+    "OMG": {"tr": "OHAAA", "es": "DIOS MÍO", "de": "OMG", "fr": "OMG"},
+    "W": {"tr": "Helal", "es": "Victoria", "de": "Gewonnen", "fr": "Victoire"},
+    "L": {"tr": "Rezalet", "es": "Perdiste", "de": "Verloren", "fr": "Perdu"},
+    "Facts": {"tr": "Gerçek", "es": "Hechos", "de": "Fakten", "fr": "Vrai"},
+    "I'm out": {"tr": "Ben gidiyom", "es": "Me voy", "de": "Ich bin raus", "fr": "Je me casse"},
+    "Mood": {"tr": "Aynen", "es": "Estado", "de": "Stimmung", "fr": "Mood"},
+    "Legend": {"tr": "Efsane", "es": "Leyenda", "de": "Legende", "fr": "Légende"},
+    
+    # Sarcasm / Roast
+    "Sure Jan": {"tr": "Tabi canım", "es": "Sí claro", "de": "Ja klar", "fr": "Ouais c'est ça"},
+    "Yikes": {"tr": "Eyvah", "es": "Ups", "de": "Autsch", "fr": "Aïe"},
+    "How cute": {"tr": "Ne tatlı", "es": "Qué lindo", "de": "Wie süß", "fr": "Trop mignon"},
+    "Okay then": {"tr": "Peki o zaman", "es": "Bueno pues", "de": "Na gut", "fr": "Bon bah"},
+    "My face when": {"tr": "Ben o an", "es": "Mi cara cuando", "de": "Mein Gesicht", "fr": "Ma tête quand"},
+    
+    # Cool / Confident
+    "I woke up like this": {"tr": "Böyle uyandım", "es": "Me desperté así", "de": "So aufgewacht", "fr": "Réveillé comme ça"},
+    "Unbothered": {"tr": "Umurumda değil", "es": "Sin preocupaciones", "de": "Unberührt", "fr": "Tranquille"},
+    "Main character": {"tr": "Baş karakter", "es": "Protagonista", "de": "Hauptrolle", "fr": "Perso principal"},
+    "It's giving...": {"tr": "Diyor ki...", "es": "Da vibes de...", "de": "Es gibt...", "fr": "Ça donne..."},
+    "Period.": {"tr": "Nokta.", "es": "Punto.", "de": "Punkt.", "fr": "Point."},
+    
+    # Tired / Work
+    "Send help": {"tr": "Yardım gönderin", "es": "Ayuda", "de": "Hilfe", "fr": "À l'aide"},
+    "Loading...": {"tr": "Yükleniyor...", "es": "Cargando...", "de": "Laden...", "fr": "Chargement..."},
+    "In a meeting": {"tr": "Toplantıdayım", "es": "En reunión", "de": "Im Meeting", "fr": "En réunion"},
+    "Need coffee": {"tr": "Kahve lazım", "es": "Necesito café", "de": "Brauche Kaffee", "fr": "Besoin de café"},
+    "Not today": {"tr": "Bugün değil", "es": "Hoy no", "de": "Nicht heute", "fr": "Pas aujourd'hui"},
+    "Done": {"tr": "Bitti", "es": "Listo", "de": "Fertig", "fr": "Fini"},
+    "Exhausted": {"tr": "Bitkinim", "es": "Agotado", "de": "Erschöpft", "fr": "Épuisé"},
+    "Why me": {"tr": "Neden ben", "es": "Por qué yo", "de": "Warum ich", "fr": "Pourquoi moi"},
+    "Mentally out": {"tr": "Kafam başka yerde", "es": "Mentalmente lejos", "de": "Geistig weg", "fr": "Ailleurs"},
+    
+    # Love / Cute
+    "Love you": {"tr": "Seni seviyorum", "es": "Te quiero", "de": "Liebe dich", "fr": "Je t'aime"},
+    "Sending love": {"tr": "Sevgilerle", "es": "Con amor", "de": "Liebe senden", "fr": "Bisous"},
+    "You're the best": {"tr": "En iyisi sensin", "es": "Eres el mejor", "de": "Du bist der Beste", "fr": "T'es le meilleur"},
+    "Blessed": {"tr": "Şanslıyım", "es": "Bendecido", "de": "Gesegnet", "fr": "Béni"},
+    "Thankful": {"tr": "Minnettarım", "es": "Agradecido", "de": "Dankbar", "fr": "Reconnaissant"},
+    
+    # Party / Celebrations
+    "Let's go": {"tr": "Haydi", "es": "Vamos", "de": "Los geht's", "fr": "C'est parti"},
+    "Weekend vibes": {"tr": "Hafta sonu havası", "es": "Vibes de finde", "de": "Wochenend-Vibes", "fr": "Ambiance weekend"},
+    "TGIF": {"tr": "Cuma geldi", "es": "Por fin viernes", "de": "Endlich Freitag", "fr": "Enfin vendredi"},
+    "Party time": {"tr": "Parti zamanı", "es": "Hora de fiesta", "de": "Partyzeit", "fr": "C'est la fête"},
+    "Cheers": {"tr": "Şerefe", "es": "Salud", "de": "Prost", "fr": "Santé"},
+    
+    # Generic / Misc
+    "Yes": {"tr": "Evet", "es": "Sí", "de": "Ja", "fr": "Oui"},
+    "No": {"tr": "Hayır", "es": "No", "de": "Nein", "fr": "Non"},
+    "Maybe": {"tr": "Belki", "es": "Quizás", "de": "Vielleicht", "fr": "Peut-être"},
+    "IDK": {"tr": "Bilmiyorum", "es": "No sé", "de": "Keine Ahnung", "fr": "Je sais pas"},
+    "BRB": {"tr": "Hemen dönerim", "es": "Vuelvo", "de": "Bin gleich zurück", "fr": "Je reviens"},
+    "OK": {"tr": "Tamam", "es": "OK", "de": "OK", "fr": "OK"},
+    "Thanks": {"tr": "Teşekkürler", "es": "Gracias", "de": "Danke", "fr": "Merci"},
+    "Please": {"tr": "Lütfen", "es": "Por favor", "de": "Bitte", "fr": "S'il te plaît"},
+    "Sorry": {"tr": "Özür dilerim", "es": "Perdón", "de": "Entschuldigung", "fr": "Désolé"},
+    "Bye": {"tr": "Hoşçakal", "es": "Adiós", "de": "Tschüss", "fr": "Ciao"},
+}
+
+
+def get_translated_caption(english_caption: str, language: str = "en") -> str:
+    """
+    Get translated caption for given language.
+    Falls back to English if translation not found.
+    
+    Args:
+        english_caption: The original English caption
+        language: Target language code (en, tr, es, de, fr)
+    
+    Returns:
+        Translated caption or original if not found
+    """
+    if language == "en" or not language:
+        return english_caption
+    
+    # Try exact match
+    if english_caption in CAPTION_TRANSLATIONS:
+        translations = CAPTION_TRANSLATIONS[english_caption]
+        if language in translations:
+            return translations[language]
+    
+    # Try case-insensitive match
+    for key, translations in CAPTION_TRANSLATIONS.items():
+        if key.lower() == english_caption.lower():
+            if language in translations:
+                return translations[language]
+    
+    # Fallback to English
+    return english_caption

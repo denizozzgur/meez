@@ -10,8 +10,9 @@ load_dotenv()
 
 class AIProcessor:
     def __init__(self):
-        from sticker_templates import MASTER_STICKER_LIBRARY
+        from sticker_templates import MASTER_STICKER_LIBRARY, get_translated_caption
         self.MASTER_LIBRARY = MASTER_STICKER_LIBRARY
+        self.get_translated_caption = get_translated_caption
         
         # Import post-processor for Pillow effects
         from sticker_post_processor import StickerPostProcessor
@@ -406,7 +407,7 @@ class AIProcessor:
             traceback.print_exc()
             return None
 
-    def create_sticker_assets(self, face_image_bytes, plan):
+    def create_sticker_assets(self, face_image_bytes, plan, language="en"):
         """
         Create sticker assets using Seedream v4/edit + Post-processing pipeline:
         1. Seedream v4/edit for expression transformation
@@ -422,14 +423,17 @@ class AIProcessor:
         b64_image = base64.b64encode(face_image_bytes).decode('utf-8')
         mime_type = self._get_mime_type(face_image_bytes)
         
-        # Helper for parallel execution
+        # Helper for parallel execution with translation
         def process_sticker_item(item):
             prompt = item["visual"]
             neg = item["neg"]
             settings = item["settings"]
-            caption_text = item["text"]
+            english_caption = item["text"]
             
-            print(f"--- Processing: {caption_text} ---")
+            # Translate caption based on language
+            caption_text = self.get_translated_caption(english_caption, language)
+            
+            print(f"--- Processing: '{english_caption}' -> '{caption_text}' (lang: {language}) ---")
             
             # Step 1: Generate with Seedream v4/edit (expression transformation)
             image_url = self.call_fal_seedream(
@@ -683,12 +687,23 @@ OUTPUT (JSON only):
         assets = []
         completed_count = 0
         
-        # Helper for execution - now with post-processing!
+        # Parse tone|style|language from combined string
+        parts = tone.split("|") if isinstance(tone, str) else ["random", "random", "en"]
+        actual_tone = parts[0] if len(parts) > 0 else "random"
+        style = parts[1] if len(parts) > 1 else "random"
+        language = parts[2] if len(parts) > 2 else "en"
+        
+        print(f"Text generation - tone: {actual_tone}, style: {style}, language: {language}")
+        
+        # Helper for execution - now with post-processing and translation!
         def process_text_item(item):
             prompt_text = item["prompt"]
-            caption = item.get("caption", "")
+            english_caption = item.get("caption", "")
             
-            print(f"--- Processing text sticker: '{caption}' ---")
+            # Translate caption based on language
+            caption = self.get_translated_caption(english_caption, language)
+            
+            print(f"--- Processing text sticker: '{english_caption}' -> '{caption}' (lang: {language}) ---")
             
             # Step 1: Generate image with Seedream (NO text in prompt)
             image_url = self.call_fal_seedream_text(prompt_text)
@@ -782,6 +797,14 @@ OUTPUT (JSON only):
     def process_image_sticker_generation(self, image_bytes, job_id, tone="funny"):
         import concurrent.futures
 
+        # Parse tone|style|language from combined string
+        parts = tone.split("|") if isinstance(tone, str) else ["funny", "random", "en"]
+        actual_tone = parts[0] if len(parts) > 0 else "funny"
+        style = parts[1] if len(parts) > 1 else "random"
+        language = parts[2] if len(parts) > 2 else "en"
+        
+        print(f"Image generation - tone: {actual_tone}, style: {style}, language: {language}")
+
         # 1. Setup Base64
         b64_image = base64.b64encode(image_bytes).decode('utf-8')
         print(f"--- STARTING PARALLEL IMAGE PIPELINE for {job_id} ---")
@@ -794,10 +817,10 @@ OUTPUT (JSON only):
                 return "New Sticker Pack"
 
         def task_sticker_gen():
-            # Plan
-            plan = self.generate_captions(emotion=None, user_context=None, tone=tone)
-            # Execute
-            return self.create_sticker_assets(image_bytes, plan)
+            # Plan - use actual_tone (without style/language)
+            plan = self.generate_captions(emotion=None, user_context=None, tone=f"{actual_tone}|{style}")
+            # Execute with language
+            return self.create_sticker_assets(image_bytes, plan, language)
 
         # 3. Parallel Execution
         assets_result = []

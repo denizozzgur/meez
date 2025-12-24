@@ -84,7 +84,8 @@ async def generate_pack(
     image: UploadFile = File(...),
     user_id: str = Form(...),
     humor_tone: str = Form(...),
-    style: str = Form("random")
+    style: str = Form("random"),
+    language: str = Form("en")
 ):
     job_id = str(uuid.uuid4())
     
@@ -94,8 +95,8 @@ async def generate_pack(
     # Initialize job status
     jobs[job_id] = {"status": "processing", "progress": 0}
     
-    # Enqueue task - PASS STYLE
-    background_tasks.add_task(real_process_job, job_id, image_bytes, humor_tone, "General Life", style)
+    # Enqueue task - PASS STYLE and LANGUAGE
+    background_tasks.add_task(real_process_job, job_id, image_bytes, humor_tone, "General Life", style, language)
     
     return {"job_id": job_id, "estimated_time": 5}
 
@@ -104,11 +105,12 @@ async def generate_text_pack(
     background_tasks: BackgroundTasks,
     user_input: str = Form(...),
     humor_tone: str = Form("random"),
-    style: str = Form("random")
+    style: str = Form("random"),
+    language: str = Form("en")
 ):
     job_id = str(uuid.uuid4())
     jobs[job_id] = {"status": "processing", "progress": 0}
-    background_tasks.add_task(run_text_generation_job, job_id, user_input, humor_tone, style)
+    background_tasks.add_task(run_text_generation_job, job_id, user_input, humor_tone, style, language)
     return {"job_id": job_id, "estimated_time": 8}
 
 
@@ -357,8 +359,8 @@ def delete_pack_from_feed(pack_id: str):
             return {"status": "not_found"}
 
 # Update Job Processors to Add to Feed
-async def run_text_generation_job(job_id: str, user_input: str, tone: str = "random", style: str = "random"):
-    print(f"Starting TEXT job {job_id} with tone: {tone}, style: {style}")
+async def run_text_generation_job(job_id: str, user_input: str, tone: str = "random", style: str = "random", language: str = "en"):
+    print(f"Starting TEXT job {job_id} with tone: {tone}, style: {style}, language: {language}")
     processor = AIProcessor()
     
     def progress_callback(completed, total):
@@ -367,22 +369,9 @@ async def run_text_generation_job(job_id: str, user_input: str, tone: str = "ran
             jobs[job_id]["progress"] = int((completed / total) * 100)
 
     try:
-        # Run blocking AI calls in thread
-        # We need to pass style to processor.process_text_sticker_generation too? 
-        # Wait, process_text_sticker_generation signature in ai_pipeline.py likely needs update or it handles tone parsing.
-        # Looking at ai_pipeline.py earlier, it parsed style from tone string OR we need to update it.
-        # Let's assume we need to update api_pipeline.py process_text_sticker_generation signature if not done.
-        # But wait, we DID NOT update process_text_sticker_generation signature in ai_pipeline.py yet!
-        # Only generate_captions was updated.
+        # Combine tone|style|language for pipeline parsing
+        combined_tone_style = f"{tone}|{style}|{language}"
         
-        # Actually, let's look at how we pass data. 
-        # For REFACTOR safety: Let's pass style as a separate arg to process_generation_task if possible, 
-        # OR we combine it into 'tone' string: "mood|style" which ai_pipeline handles.
-        # This wrapper is safer for now without changing ai_pipeline signature again.
-        
-        combined_tone_style = f"{tone}|{style}"
-        
-        # Use partial or lambda to pass keyword args to to_thread if strict
         result = await asyncio.to_thread(processor.process_text_sticker_generation, user_input, job_id, combined_tone_style, progress_callback)
         
         print(f"DEBUG MAIN: Saving Result Key for {job_id}: {result}")
@@ -398,22 +387,15 @@ async def run_text_generation_job(job_id: str, user_input: str, tone: str = "ran
         print(f"Text Job failed: {e}")
         jobs[job_id]["status"] = "failed"
 
-async def real_process_job(job_id: str, image_data: bytes, tone: str, contexts: str, style: str = "random"):
-    print(f"Starting job {job_id}, style: {style}")
-    # Update tone to include style for parsing in ai_pipeline if strictly needed
-    # BUT generate_captions accepts explicit style arg now.
-    # We need to call a method that calls generate_captions.
-    # processor.process_image_sticker_generation calls generate_captions.
-    # We need to update processor.process_image_sticker_generation signature in ai_pipeline.py first?
-    # Or just pass combined string for now to save time/complexity.
-    
-    combined_tone = f"{tone}|{style}"
+async def real_process_job(job_id: str, image_data: bytes, tone: str, contexts: str, style: str = "random", language: str = "en"):
+    print(f"Starting job {job_id}, style: {style}, language: {language}")
+    # Combine tone|style|language for pipeline parsing
+    combined_tone = f"{tone}|{style}|{language}"
     
     processor = AIProcessor()
     
     try:
         # 1. Process Image to Stickers (New v4 Pipeline)
-        # Passing combined tone prevents breaking signature
         result_pack = processor.process_image_sticker_generation(image_data, job_id, combined_tone)
         
         jobs[job_id]["progress"] = 100
