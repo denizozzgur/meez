@@ -4,15 +4,14 @@ class ApiConstants {
   // Dynamic base URL based on platform
   // Simulator can use localhost, physical device needs LAN IP
   static String get baseUrl {
-    // For physical device testing: use your computer's LAN IP
-    // For production: replace with your actual backend URL
-    const String lanIP = '192.168.1.187';
-    const String localHost = '127.0.0.1';
+    // Production Railway URL
+    const String productionUrl = 'https://meez-production.up.railway.app/api/v1';
     
-    // Check if running on physical device vs simulator
-    // Platform.isIOS is true for both, but we can't easily detect simulator at runtime
-    // So we'll use LAN IP which works for both (simulator can also reach LAN IP)
-    return 'http://$lanIP:8000/api/v1';
+    // For local development, uncomment below and comment production:
+    // const String lanIP = '192.168.1.187';
+    // return 'http://$lanIP:8000/api/v1';
+    
+    return productionUrl;
   }
 
   // Auth
