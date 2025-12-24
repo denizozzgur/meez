@@ -907,29 +907,70 @@ class _CreateScreenState extends State<CreateScreen> with SingleTickerProviderSt
                     style: const TextStyle(color: Colors.white, fontSize: 16),
                     cursorColor: AppColors.accentBlue,
                     decoration: InputDecoration(
-                      hintText: "Type anything",
-                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 16, fontWeight: FontWeight.w400),
+                      hintText: "Type anything... e.g. 'a tired cat'",
+                      hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 15, fontWeight: FontWeight.w400),
                       border: InputBorder.none,
-                      suffixIcon: GestureDetector(
-                        onTap: () => _openStyleSelector(context),
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 4),
-                          child: Icon(
-                            Icons.tune_rounded,
-                            color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
-                                ? AppColors.accentBlue
-                                : Colors.white.withOpacity(0.4),
-                            size: 22,
-                          ),
-                        ),
-                      ),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 14) 
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 28),
+              const SizedBox(height: 14),
+
+              // Premium customize button
+              GestureDetector(
+                onTap: () => _openStyleSelector(context),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                  decoration: BoxDecoration(
+                    gradient: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
+                        ? LinearGradient(
+                            colors: [
+                              AppColors.accentBlue.withOpacity(0.15),
+                              AppColors.accentBlue.withOpacity(0.08),
+                            ],
+                          )
+                        : null,
+                    color: (_selectedMoods.isEmpty && _selectedStyles.isEmpty)
+                        ? Colors.white.withOpacity(0.04)
+                        : null,
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(
+                      color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
+                          ? AppColors.accentBlue.withOpacity(0.25)
+                          : Colors.white.withOpacity(0.08),
+                      width: 1
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.tune_rounded,
+                        size: 17,
+                        color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
+                            ? AppColors.accentBlue
+                            : Colors.white.withOpacity(0.55),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        _getStyleSummary(),
+                        style: TextStyle(
+                          color: (_selectedMoods.isNotEmpty || _selectedStyles.isNotEmpty)
+                              ? Colors.white.withOpacity(0.9)
+                              : Colors.white.withOpacity(0.55),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 26),
 
               // 3. Primary CTA
               Container(
